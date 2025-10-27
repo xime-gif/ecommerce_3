@@ -5,9 +5,7 @@
 package modelos;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import java.io.Serializable;
 
 /**
@@ -15,44 +13,28 @@ import java.io.Serializable;
  * @author Ximena
  */
 @Entity
-public class Administrador implements Serializable {
+@Table(name = "Administrador")
+public class Administrador extends Usuario implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    public Long getId() {
-        return id;
+    public void gestionarUsuarios() {
+        
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void gestionarCatalogo() {
+        
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+    public void gestionarPedidos() {
+        
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Administrador)) {
-            return false;
-        }
-        Administrador other = (Administrador) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+    public void moderarResenias() {
+        
     }
 
     @Override
     public String toString() {
-        return "modelos.Administrador[ id=" + id + " ]";
+        return "Administrador [id=" + getId() + ", nombre=" + getNombre() + "]";
     }
-    
+
 }

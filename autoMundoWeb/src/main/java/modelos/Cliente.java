@@ -4,55 +4,58 @@
  */
 package modelos;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
  * @author Ximena
  */
 @Entity
-public class Cliente implements Serializable {
+@Table(name = "Cliente")
+public class Cliente extends Usuario implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+    private CarritoDeCompras carrito;
 
-    public Long getId() {
-        return id;
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Pedido> pedidos;
+
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Resenia> resenias;
+
+    public CarritoDeCompras getCarrito() {
+        return carrito;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCarrito(CarritoDeCompras carrito) {
+        this.carrito = carrito;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+    public List<Pedido> getPedidos() {
+        return pedidos;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Cliente)) {
-            return false;
-        }
-        Cliente other = (Cliente) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
+
+    public List<Resenia> getResenias() {
+        return resenias;
+    }
+
+    public void setResenias(List<Resenia> resenias) {
+        this.resenias = resenias;
     }
 
     @Override
     public String toString() {
-        return "modelos.Cliente[ id=" + id + " ]";
+        return "Cliente [id=" + getId() + ", nombre=" + getNombre() + "]";
     }
-    
+
 }
