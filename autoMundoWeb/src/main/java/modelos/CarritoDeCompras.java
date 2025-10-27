@@ -4,11 +4,17 @@
  */
 package modelos;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -22,6 +28,16 @@ public class CarritoDeCompras implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @OneToOne
+    @JoinColumn(name = "cliente_id", nullable = false)
+    private Cliente cliente;
+    
+    @OneToMany(mappedBy = "carrito", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ItemCarrito> items;
+    
+    @Column(nullable = false)
+    private double total = 0.0;
+    
     public Long getId() {
         return id;
     }
