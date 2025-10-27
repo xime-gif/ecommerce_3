@@ -46,6 +46,32 @@ public class CarritoDeCompras implements Serializable {
         this.id = id;
     }
 
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public List<ItemCarrito> getItems() {
+        return items;
+    }
+
+    public void setItems(List<ItemCarrito> items) {
+        this.items = items;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -68,7 +94,7 @@ public class CarritoDeCompras implements Serializable {
 
     @Override
     public String toString() {
-        return "modelos.CarritoDeCompras[ id=" + id + " ]";
+        return "CarritoDeCompras [id=" + id + ", total=" + total + "]";
     }
     
 }
