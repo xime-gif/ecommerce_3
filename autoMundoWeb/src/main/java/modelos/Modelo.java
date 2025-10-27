@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelos;
 
 import jakarta.persistence.Column;
@@ -9,7 +5,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.util.List;
 
@@ -18,18 +17,27 @@ import java.util.List;
  * @author Ximena
  */
 @Entity
+@Table(name = "modelos")
 public class Modelo implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-    @Column(name = "nombre", nullable = false)
+
+    @Column(nullable = false, length = 100)
     private String nombre;
-    
+
+    @ManyToOne
+    @JoinColumn(name = "idMarca", nullable = false)
+    private Marca marca;
+
     @OneToMany(mappedBy = "modelo")
     private List<Vehiculo> vehiculos;
+
+    public Modelo() {
+    }
 
     public Long getId() {
         return id;
@@ -47,6 +55,14 @@ public class Modelo implements Serializable {
         this.nombre = nombre;
     }
 
+    public Marca getMarca() {
+        return marca;
+    }
+
+    public void setMarca(Marca marca) {
+        this.marca = marca;
+    }
+
     public List<Vehiculo> getVehiculos() {
         return vehiculos;
     }
@@ -55,32 +71,4 @@ public class Modelo implements Serializable {
         this.vehiculos = vehiculos;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Modelo)) {
-            return false;
-        }
-        Modelo other = (Modelo) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Modelo{" +
-                "id=" + id +
-                ", nombre=" + nombre +
-                '}';
-    }
- 
 }

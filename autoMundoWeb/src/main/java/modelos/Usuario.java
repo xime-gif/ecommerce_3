@@ -1,55 +1,64 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelos;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
  * @author Ximena
  */
 @Entity
+@Table(name = "usuarios")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     @Column(nullable = false, length = 150)
     private String nombre;
-    
-    @Column(nullable = false, unique = true, length = 150)
+
+    @Column(nullable = false, unique = true, length = 255)
     private String correo;
-    
-    @Column(nullable = false, length = 50)
+
+    @Column(nullable = false, length = 255)
     private String contrasena;
-    
-    @Column(length = 30)
+
+    @Column(length = 20)
     private String telefono;
-    
-    @ManyToOne
-    @JoinColumn(name = "direccion_id")
-    private Direccion direccion;
-    
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 50)
+    private RolUsuario rol;
+
     @Column(nullable = false)
-    private boolean activo = true;
-    
-    @Column(nullable = false, length = 20)
-    private String rol = "CLIENTE";
-    
+    private boolean esActivo = true;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Direccion> direcciones;
+
+    @OneToMany(mappedBy = "cliente")
+    private List<Pedido> pedidos;
+
+    @OneToMany(mappedBy = "cliente")
+    private List<Resenia> resenias;
+
+    public Usuario() {
+    }
 
     public Long getId() {
         return id;
@@ -91,53 +100,44 @@ public class Usuario implements Serializable {
         this.telefono = telefono;
     }
 
-    public Direccion getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(Direccion direccion) {
-        this.direccion = direccion;
-    }
-
-    public boolean isActivo() {
-        return activo;
-    }
-
-    public void setActivo(boolean activo) {
-        this.activo = activo;
-    }
-
-    public String getRol() {
+    public RolUsuario getRol() {
         return rol;
     }
 
-    public void setRol(String rol) {
+    public void setRol(RolUsuario rol) {
         this.rol = rol;
     }
-    
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+
+    public boolean isEsActivo() {
+        return esActivo;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Usuario)) {
-            return false;
-        }
-        Usuario other = (Usuario) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+    public void setEsActivo(boolean esActivo) {
+        this.esActivo = esActivo;
     }
 
-    @Override
-    public String toString() {
-        return "Usuario [id=" + id + ", nombre=" + nombre + ", correo=" + correo + "]";
+    public List<Direccion> getDirecciones() {
+        return direcciones;
     }
-    
+
+    public void setDirecciones(List<Direccion> direcciones) {
+        this.direcciones = direcciones;
+    }
+
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
+
+    public List<Resenia> getResenias() {
+        return resenias;
+    }
+
+    public void setResenias(List<Resenia> resenias) {
+        this.resenias = resenias;
+    }
+
 }

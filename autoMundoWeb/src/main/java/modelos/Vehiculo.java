@@ -1,10 +1,5 @@
-    /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelos;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.util.List;
 
@@ -21,79 +17,71 @@ import java.util.List;
  * @author Jp
  */
 @Entity
+@Table(name = "vehiculos")
 public class Vehiculo implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-    // Atributos
-    @Column(name = "nombre", nullable = false)
+
+    @Column(nullable = false, length = 255)
     private String nombre;
-    
-    @Column(name = "descripcion", nullable = false)
+
+    @Column(nullable = false, length = 500)
     private String descripcion;
-    
-    @Column(name = "precio", nullable = false)
-    private double precio;
-    
-    @Column(name = "existencias", nullable = false)
+
+    @Column(nullable = false)
+    private Double precio;
+
+    @Column(nullable = false)
     private Integer existencias;
-    
-    @Column(name = "disponible", nullable = false)
-    private boolean disponible;
-    
-    @Column(name = "kilometraje", nullable = false)
-    private double kilometraje;
-    
-    @Column(name = "anio", nullable = false)
+
+    @Column(nullable = false)
+    private Integer kilometraje;
+
+    @Column(nullable = false)
     private Integer anio;
-    
-    @Column(name = "motor", nullable = false)
+
+    @Column(nullable = false, length = 100)
     private String motor;
-    
-    @Column(name = "transmision", nullable = false)
+
+    @Column(nullable = false, length = 50)
     private String transmision;
-    
-    @Column(name = "color", nullable = false)
+
+    @Column(nullable = false, length = 50)
     private String color;
-    
-    // Relaciones
-    @OneToMany(mappedBy = "vehiculo", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ImagenVehiculo> imagenes;
-    
+
     @ManyToOne
-    @JoinColumn(name = "categoriaId")
+    @JoinColumn(name = "categoriaId", nullable = false)
     private Categoria categoria;
-    
+
     @ManyToOne
-    @JoinColumn(name = "modeloId")
+    @JoinColumn(name = "modeloId", nullable = false)
     private Modelo modelo;
-    
-    @ManyToOne
-    @JoinColumn(name = "marcaId")
-    private Marca marca;
-    
-    @OneToMany(mappedBy = "vehiculo", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ItemCarrito> itemsCarrito;
-    
-    @OneToMany(mappedBy = "vehiculo", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<DetallePedido> detallesPedido;
-    
-    @OneToMany(mappedBy = "vehiculo", cascade = CascadeType.ALL, orphanRemoval = true)
+
+    @OneToMany(mappedBy = "vehiculo")
+    private List<ImagenVehiculo> imagenes;
+
+    @OneToMany(mappedBy = "vehiculo")
     private List<Resenia> resenias;
+
+    public Vehiculo() {
+    }
 
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
-    
+
     public String getNombre() {
         return nombre;
     }
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -101,41 +89,39 @@ public class Vehiculo implements Serializable {
     public String getDescripcion() {
         return descripcion;
     }
+
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 
-    public double getPrecio() {
+    public Double getPrecio() {
         return precio;
     }
-    public void setPrecio(double precio) {
+
+    public void setPrecio(Double precio) {
         this.precio = precio;
     }
 
     public Integer getExistencias() {
         return existencias;
     }
+
     public void setExistencias(Integer existencias) {
         this.existencias = existencias;
     }
 
-    public boolean isDisponible() {
-        return disponible;
-    }
-    public void setDisponible(boolean disponible) {
-        this.disponible = disponible;
-    }
-
-    public double getKilometraje() {
+    public Integer getKilometraje() {
         return kilometraje;
     }
-    public void setKilometraje(double kilometraje) {
+
+    public void setKilometraje(Integer kilometraje) {
         this.kilometraje = kilometraje;
     }
 
     public Integer getAnio() {
         return anio;
     }
+
     public void setAnio(Integer anio) {
         this.anio = anio;
     }
@@ -143,6 +129,7 @@ public class Vehiculo implements Serializable {
     public String getMotor() {
         return motor;
     }
+
     public void setMotor(String motor) {
         this.motor = motor;
     }
@@ -150,6 +137,7 @@ public class Vehiculo implements Serializable {
     public String getTransmision() {
         return transmision;
     }
+
     public void setTransmision(String transmision) {
         this.transmision = transmision;
     }
@@ -157,20 +145,15 @@ public class Vehiculo implements Serializable {
     public String getColor() {
         return color;
     }
+
     public void setColor(String color) {
         this.color = color;
-    }
-
-    public List<ImagenVehiculo> getImagenes() {
-        return imagenes;
-    }
-    public void setImagenes(List<ImagenVehiculo> imagenes) {
-        this.imagenes = imagenes;
     }
 
     public Categoria getCategoria() {
         return categoria;
     }
+
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
@@ -178,74 +161,25 @@ public class Vehiculo implements Serializable {
     public Modelo getModelo() {
         return modelo;
     }
+
     public void setModelo(Modelo modelo) {
         this.modelo = modelo;
     }
 
-    public Marca getMarca() {
-        return marca;
+    public List<ImagenVehiculo> getImagenes() {
+        return imagenes;
     }
 
-    public void setMarca(Marca marca) {
-        this.marca = marca;
-    }
-
-    public List<ItemCarrito> getItemsCarrito() {
-        return itemsCarrito;
-    }
-    public void setItemsCarrito(List<ItemCarrito> itemsCarrito) {
-        this.itemsCarrito = itemsCarrito;
-    }
-
-    public List<DetallePedido> getDetallesPedido() {
-        return detallesPedido;
-    }
-    public void setDetallesPedido(List<DetallePedido> detallesPedido) {
-        this.detallesPedido = detallesPedido;
+    public void setImagenes(List<ImagenVehiculo> imagenes) {
+        this.imagenes = imagenes;
     }
 
     public List<Resenia> getResenias() {
         return resenias;
     }
+
     public void setResenias(List<Resenia> resenias) {
         this.resenias = resenias;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Vehiculo)) {
-            return false;
-        }
-        Vehiculo other = (Vehiculo) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Vehiculo{" +
-                "id=" + id +
-                ", nombre=" + nombre +
-                ", descripcion=" + descripcion +
-                ", precio=" + precio +
-                ", existencias=" + existencias +
-                ", disponible=" + disponible +
-                ", kilometraje=" + kilometraje +
-                ", anio=" + anio +
-                ", motor=" + motor +
-                ", transmision=" + transmision +
-                ", color=" + color +
-                '}';
-    }
-    
 }

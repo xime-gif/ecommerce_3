@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelos;
 
 import jakarta.persistence.CascadeType;
@@ -13,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,38 +19,41 @@ import java.util.List;
  * @author Ximena
  */
 @Entity
+@Table(name = "pedidos")
 public class Pedido implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-    @Column(nullable = false, unique = true)
+
+    @Column(nullable = false, length = 50, unique = true)
     private String numeroPedido;
-    
-    @ManyToOne
-    @JoinColumn(name = "cliente_id")
-    private Cliente cliente;
-    
-    @ManyToOne
-    @JoinColumn(name = "direccion_envio_id")
-    private Direccion direccionEnvio;
-    
-    @Column(nullable = false)
-    private LocalDateTime fechaHoraCompra = LocalDateTime.now();
-    
-    @Column(nullable = false, length = 30)
+
+    private LocalDateTime fechaCompra;
+
+    @Column(length = 50)
     private String metodoPago;
-    
-    @Column(nullable = false, length = 20)
-    private String estado = "PENDIENTE";
-    
-    @Column(nullable = false)
-    private double totalPagado;
-    
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+
+    @Column(length = 50)
+    private String estado;
+
+    private Double totalPagado;
+
+    @ManyToOne
+    @JoinColumn(name = "clienteId", nullable = false)
+    private Usuario cliente;
+
+    @ManyToOne
+    @JoinColumn(name = "direccionEnvioId", nullable = false)
+    private Direccion direccionEnvio;
+
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
     private List<DetallePedido> detalles;
+
+    public Pedido() {
+    }
 
     public Long getId() {
         return id;
@@ -71,28 +71,12 @@ public class Pedido implements Serializable {
         this.numeroPedido = numeroPedido;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public LocalDateTime getFechaCompra() {
+        return fechaCompra;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public Direccion getDireccionEnvio() {
-        return direccionEnvio;
-    }
-
-    public void setDireccionEnvio(Direccion direccionEnvio) {
-        this.direccionEnvio = direccionEnvio;
-    }
-
-    public LocalDateTime getFechaHoraCompra() {
-        return fechaHoraCompra;
-    }
-
-    public void setFechaHoraCompra(LocalDateTime fechaHoraCompra) {
-        this.fechaHoraCompra = fechaHoraCompra;
+    public void setFechaCompra(LocalDateTime fechaCompra) {
+        this.fechaCompra = fechaCompra;
     }
 
     public String getMetodoPago() {
@@ -111,12 +95,28 @@ public class Pedido implements Serializable {
         this.estado = estado;
     }
 
-    public double getTotalPagado() {
+    public Double getTotalPagado() {
         return totalPagado;
     }
 
-    public void setTotalPagado(double totalPagado) {
+    public void setTotalPagado(Double totalPagado) {
         this.totalPagado = totalPagado;
+    }
+
+    public Usuario getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Usuario cliente) {
+        this.cliente = cliente;
+    }
+
+    public Direccion getDireccionEnvio() {
+        return direccionEnvio;
+    }
+
+    public void setDireccionEnvio(Direccion direccionEnvio) {
+        this.direccionEnvio = direccionEnvio;
     }
 
     public List<DetallePedido> getDetalles() {
@@ -126,32 +126,5 @@ public class Pedido implements Serializable {
     public void setDetalles(List<DetallePedido> detalles) {
         this.detalles = detalles;
     }
-    
-    
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Pedido)) {
-            return false;
-        }
-        Pedido other = (Pedido) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "modelos.Pedido[ id=" + id + " ]";
-    }
-    
 }

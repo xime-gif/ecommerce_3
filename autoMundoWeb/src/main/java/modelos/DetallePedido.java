@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelos;
 
 import jakarta.persistence.Column;
@@ -11,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import java.io.Serializable;
 
 /**
@@ -18,26 +15,31 @@ import java.io.Serializable;
  * @author Ximena
  */
 @Entity
+@Table(name = "detallesPedido")
 public class DetallePedido implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-    @Column(name = "cantidad", nullable = false)
+
+    @Column(nullable = false)
     private Integer cantidad;
-    
-    @Column(name = "precioUnitario", nullable = false)
-    private double precioUnitario;
-    
+
+    @Column(nullable = false)
+    private Double precioUnitario;
+
     @ManyToOne
-    @JoinColumn(name = "vehiculoId")
-    private Vehiculo vehiculo;
-    
-    @ManyToOne
-    @JoinColumn(name = "pedidoId")
+    @JoinColumn(name = "pedidoId", nullable = false)
     private Pedido pedido;
+
+    @ManyToOne
+    @JoinColumn(name = "vehiculoId", nullable = false)
+    private Vehiculo vehiculo;
+
+    public DetallePedido() {
+    }
 
     public Long getId() {
         return id;
@@ -79,29 +81,4 @@ public class DetallePedido implements Serializable {
         this.pedido = pedido;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof DetallePedido)) {
-            return false;
-        }
-        DetallePedido other = (DetallePedido) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "modelos.DetallePedido[ id=" + id + " ]";
-    }
-    
 }
