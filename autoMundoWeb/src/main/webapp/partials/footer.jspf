@@ -1,0 +1,26 @@
+<footer class="footer">
+    
+    <div class="footer-izquierdo">
+        <h3>Derechos reservados.</h3>
+    </div>
+    
+    <div>
+        <h4>Equipo</h4>
+        <p>Ximena Rosales Panduro - 00000253088</p>
+        <p>Juan Pablo Olivarría Covarrubias - 00000252886</p>
+        <p>Luis Eduardo Uribe Vega - 00000253239</p>
+        <p>Ari Raúl Montoya Navarro - 00000252825</p>
+        <p>Javier Efren Castillo Sanchez - 00000239873</p>
+    </div>
+    
+    <div>
+        <h4>Materia</h4>
+        <p>Aplicaciones Web</p>
+    </div>
+    
+    <div>
+        <h4>Maestro</h4>
+        <p>Jesús Guillermo Zarate Camargo</p>
+    </div>
+    
+</footer>
