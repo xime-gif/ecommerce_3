@@ -13,7 +13,7 @@ public class CarritoDeCompras implements Serializable {
     private final List<ItemCarrito> items;
 
     public CarritoDeCompras() {
-        this.items = new ArrayList();
+        this.items = new ArrayList<>();
     }
 
     public List<ItemCarrito> getItems() {
