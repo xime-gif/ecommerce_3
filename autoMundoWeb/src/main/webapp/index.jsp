@@ -12,13 +12,14 @@
         <section class="principal">
             <div class="texto-principal">
                 <h1>Encuentra<br>el auto de<br>tus sueños</h1>
-                <p>Explora nuestro extenso<br>catálogo que venimos<br>ofreciendo desde 2025.</p>
+                <p>Explora nuestro extenso catálogo que venimos ofreciendo desde 2025.</p>
                 <a href="catalogo.jsp" class="boton">Ver más</a>
             </div>
             
             <div class="imagen-principal">
-                
+                <img src="imagenes/auto-portada.jpg" height="580" width="691">
             </div>
+            
         </section>
         
         <%@include file="partials/footer.jspf" %>
