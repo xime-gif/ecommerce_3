@@ -38,9 +38,6 @@ public class Usuario implements Serializable {
     @Column(nullable = false, length = 255)
     private String contrasena;
 
-    @Column(length = 20)
-    private String telefono;
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 50)
     private RolUsuario rol;
@@ -90,14 +87,6 @@ public class Usuario implements Serializable {
 
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
     }
 
     public RolUsuario getRol() {
