@@ -1,0 +1,152 @@
+/* resenias.css
+   Paleta:
+   - vino: #8B3037
+   - beige (fondo/card): #d8cfc0  <-- usado como background global y cards
+   - blue-gray: #525f6f
+   - dark-blue: #243141
+   - darker-blue/star-color: #141b25
+*/
+
+/* Variables */
+:root{
+  --vino: #8B3037;
+  --beige: #d8cfc0;      /* fondo global + cards */
+  --blue-gray: #525f6f;
+  --dark-blue: #243141;
+  --darker-blue: #141b25; /* color de las estrellas */
+}
+
+/* FORZAR fondo global igual al de las cards */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--beige) !important; /* fondo global = #d8cfc0 */
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  color: var(--darker-blue);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* Contenedor principal (misma clase que pedidos) */
+.pedidos-wrapper {
+  width: 85%;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 12px;
+  box-sizing: border-box;
+}
+
+/* Título */
+.pedidos-wrapper .titulo-historial {
+  text-align: center;
+  font-size: 46px;
+  font-family: "Playfair Display", serif;
+  margin-bottom: 40px;
+  color: var(--dark-blue);
+  line-height: 1.05;
+}
+
+/* Card / Tarjeta */
+.pedidos-wrapper .pedido-box,
+.pedidos-wrapper .resenia-card {
+  background: var(--beige);           /* mismo color que body: #d8cfc0 */
+  border: 1.8px solid var(--vino);    /* borde vino */
+  border-radius: 18px;
+  padding: 22px;
+  margin-bottom: 28px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+  box-sizing: border-box;
+}
+
+/* Contenido interno */
+.pedidos-wrapper .pedido-box .contenido,
+.pedidos-wrapper .resenia-card .contenido {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+/* Imagen del producto */
+.pedidos-wrapper .img-producto {
+  width: 130px;
+  height: 90px;
+  border-radius: 12px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.03), rgba(0,0,0,0.00));
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+/* Información textual */
+.pedidos-wrapper .info h2,
+.pedidos-wrapper .info h3 {
+  margin: 0;
+  font-size: 26px;
+  color: var(--darker-blue);
+}
+
+.pedidos-wrapper .info p,
+.pedidos-wrapper .info .comentario {
+  margin: 6px 0 0 0;
+  font-size: 15px;
+  color: var(--darker-blue);
+  line-height: 1.35;
+}
+
+/* Botones (si se requieren más tarde) */
+.pedidos-wrapper .acciones-info {
+  margin-top: 12px;
+  display: flex;
+  gap: 12px;
+}
+
+.pedidos-wrapper .btn-mini {
+  background: var(--dark-blue);
+  padding: 7px 18px;
+  color: var(--beige);
+  border-radius: 18px;
+  font-size: 13px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+.pedidos-wrapper .btn-mini:hover { background: var(--darker-blue); }
+
+/* Estrellas: color EXACTO solicitado */
+.pedidos-wrapper .estrellas {
+  margin-left: auto;
+  font-size: 28px;
+  color: var(--darker-blue);   /* #141b25 */
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.pedidos-wrapper .estrellas i {
+  transition: color .15s ease, transform .08s ease;
+  cursor: pointer;
+}
+
+.pedidos-wrapper .estrellas i:hover {
+  color: #FFB23F;  /* dorado al hover */
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .pedidos-wrapper .pedido-box .contenido,
+  .pedidos-wrapper .resenia-card .contenido {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .pedidos-wrapper .estrellas {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+}
