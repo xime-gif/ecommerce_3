@@ -6,6 +6,7 @@
         <title>Mis Reseñas - AutoZone</title>
         <link rel="stylesheet" href="estilos/estiloGeneral.css">
         <link rel="stylesheet" href="estilos/resenias.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     </head>
 
     <body>
@@ -14,7 +15,9 @@
 
         <div class="pedidos-wrapper">
 
-            <h1 class="titulo-historial">Reseñas de los usuarios</h1>
+            <h1 class="titulo-historial">Reseñas</h1>
+
+         
             <div class="pedido-box">
                 <div class="contenido">
 
@@ -36,11 +39,11 @@
                 </div>
             </div>
 
-            
+       
             <div class="pedido-box">
                 <div class="contenido">
 
-                    <img src="imagenes/onix.jpg" class="img-producto" alt="ChevroletOnix">
+                    <img src="imagenes/onix.jpg" class="img-producto" alt="Onix">
 
                     <div class="info">
                         <h2>Chevrolet Onix</h2>
