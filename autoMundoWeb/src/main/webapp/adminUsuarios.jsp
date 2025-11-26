@@ -11,6 +11,7 @@
 
         <%@include file="partials/headerAdmin.jspf" %>
 
+<main>
         <section class="admin-contenido">
 
             <h1>Administración de Usuarios</h1>
@@ -99,7 +100,7 @@
             </table>
 
         </section>
-
+</main>
         <%@include file="partials/footer.jspf" %>
 
         <div id="modalUsuario" class="modal">

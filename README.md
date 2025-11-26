@@ -5,3 +5,6 @@ Juan Pablo Olivarría Covarrubias - 00000252886
 Luis Eduardo Uribe Vega - 00000253239
 Ari Raúl Montoya Navarro - 00000252825 
 Javier Efren Castillo Sanchez - 00000239873
+
+Notas:
+Agregue la libreria de font awesome para tener logos chilos

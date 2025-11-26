@@ -12,7 +12,7 @@
     <body>
 
         <%@include file="partials/header.jspf" %>
-
+<main>
         <div class="pedidos-wrapper">
 
             <h1 class="titulo-historial">Reseñas</h1>
@@ -62,7 +62,7 @@
             </div>
 
         </div>
-
+</main>
         <%@include file="partials/footer.jspf" %>
 
     </body>

@@ -8,7 +8,7 @@
     <body>
         
         <%@include file="partials/header.jspf" %>
-
+<main>
         <section class="principal">
             <div class="texto-principal">
                 <h1>Encuentra<br>el auto de<br>tus sueños</h1>
@@ -21,7 +21,7 @@
             </div>
             
         </section>
-        
+        </main>
         <%@include file="partials/footer.jspf" %>
         
     </body>

@@ -10,7 +10,7 @@
     <body>
 
         <%@include file="partials/header.jspf" %>
-
+<main>
         <section class="login-section">
 
             <div class="login-imagen">
@@ -39,7 +39,7 @@
             </div>
 
         </section>
-
+</main>
         <%@include file="partials/footer.jspf" %>
 
     </body>

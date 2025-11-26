@@ -10,7 +10,7 @@
     <body>
 
         <%@include file="partials/header.jspf" %>
-
+<main>
         <section class="registro-section">
 
             <div class="registro-panel">
@@ -42,7 +42,7 @@
             </div>
 
         </section>
-
+</main>
         <%@include file="partials/footer.jspf" %>
 
     </body>

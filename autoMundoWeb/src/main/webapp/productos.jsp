@@ -10,7 +10,7 @@
     <body>
         
         <%@include file="partials/header.jspf" %>
-
+<main>
         <section class="producto-container">
             
             <div class="imagen-detalle-contenedor">
@@ -61,7 +61,7 @@
             </div>
 
         </section>
-        
+</main>        
         <%@include file="partials/footer.jspf" %>
         
     </body>
