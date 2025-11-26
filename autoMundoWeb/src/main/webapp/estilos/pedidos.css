@@ -1,0 +1,92 @@
+/* PALETA DE COLORES */
+:root {
+    --vino: #8B3037;
+    --beige: #d8cfc0;
+    --blue-gray: #525f6f;
+    --dark-blue: #243141;
+    --darker-blue: #141b25;
+}
+
+/* FONDO GENERAL DE LA PÁGINA */
+body {
+    background: var(--beige); 
+}
+
+/* CONTENEDOR GENERAL */
+.pedidos-wrapper {
+    width: 85%;
+    margin: 40px auto;
+    font-family: 'Inter', sans-serif;
+}
+
+/* TÍTULO */
+.titulo-historial {
+    text-align: center;
+    font-size: 46px;
+    font-family: "Playfair Display", serif;
+    margin-bottom: 40px;
+    color: var(--dark-blue);
+}
+
+/* TARJETAS */
+.pedido-box {
+    background: var(--beige); /* mismo color */
+    border: 1.8px solid var(--vino);
+    border-radius: 18px;
+    padding: 22px;
+    margin-bottom: 28px;
+}
+
+.contenido {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+/* IMAGEN */
+.img-producto {
+    width: 130px;
+    height: 90px;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+/* INFORMACIÓN */
+.info h2 {
+    margin: 0;
+    font-size: 26px;
+    color: var(--darker-blue);
+}
+
+.acciones-info {
+    margin-top: 12px;
+    display: flex;
+    gap: 12px;
+}
+
+/* BOTONES */
+.btn-mini {
+    background: var(--dark-blue);
+    padding: 7px 18px;
+    color: var(--beige);
+    border-radius: 18px;
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-mini:hover {
+    background: var(--darker-blue);
+}
+
+/* ESTRELLAS */
+.estrellas {
+    margin-left: auto;
+    font-size: 28px;
+    color: var(--blue-gray);
+}
+
+.estrellas i:hover {
+    color: #FFB23F;
+    cursor: pointer;
+}
