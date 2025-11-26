@@ -1,12 +1,13 @@
 <nav class="navegacion">
-    <img src="imagenes/logo.png" class="logo" alt="AutoZone" height="60">
+    
+    <a href="index.jsp"><img src="imagenes/logo.png" class="logo" alt="AutoZone" height="60"></a>
     
     <ul>
-        <li><a href="index.jsp" class="<%= request.getRequestURI().contains("index.jsp") ? "active" : "" %>">Principal</a></li>
-        <li><a href="catalogo.jsp" class="<%= request.getRequestURI().contains("catalogo.jsp") ? "active" : "" %>">Catálogo</a></li>
-        <li><a href="carrito.jsp">Carrito</a></li>
+        <li><a href="index.jsp" class="<%= request.getRequestURI().contains("index.jsp") || request.getRequestURI().endsWith("/") ? "active" : ""%>">Principal</a></li>
+        <li><a href="catalogo.jsp" class="<%= request.getRequestURI().contains("catalogo.jsp") ? "active" : ""%>">Catálogo</a></li>
+        <li><a href="carritoCompras.jsp" class="<%= request.getRequestURI().contains("carritoCompras.jsp") ? "active" : ""%>">Carrito</a></li>
         <li><a href="pedidos.jsp">Pedidos</a></li>
         <li><a href="resenias.jsp">Reseñas</a></li>
     </ul>
-        
+
 </nav>

@@ -28,7 +28,7 @@ body {
     gap: 35px;
 }
 
-.navegacion a {
+.navegacion li a {
     color: var(--color-white);
     text-decoration: none;
     padding-bottom: 4px;
@@ -36,8 +36,13 @@ body {
     transition: border-color 0.2s ease;
 }
 
-.navegacion a:hover {
+.navegacion li a:hover {
     border-bottom: 2px solid var(--color-white);
+}
+
+.navegacion li a.active{
+    border-bottom: 2px solid var(--color-white);
+    font-weight: bold;
 }
 
 /* Pantalla principal */
