@@ -3,8 +3,8 @@
 
     <ul>
         <li><a href="adminUsuarios.jsp" class="active">Usuarios</a></li>
-        <li><a href="">Altas</a></li>
-        <li><a href="">Bajas</a></li>
+        <li><a href="adminAltas.jsp">Altas</a></li>
+        <li><a href="adminBajas.jsp">Bajas</a></li>
         <li><a href="inicioSesion.jsp">Cerrar Sesión</a></li>
     </ul>
 </nav>
