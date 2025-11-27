@@ -161,4 +161,86 @@
     color: #B00020;
 }
 
+.form-alta {
+    background: #ffffff;
+    padding: 30px;
+    width: 500px;
+    border-radius: 8px;
+    box-shadow: 0 0 8px #0002;
+}
 
+.form-alta label {
+    display: block;
+    margin-top: 15px;
+    color: #600000;
+}
+
+.form-alta input,
+.form-alta select,
+.form-alta textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    border: 2px solid #600000;
+    background: #f1f1f1;
+}
+
+.form-alta button {
+    margin-top: 25px;
+    width: 100%;
+}
+
+
+.car-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 30px;
+}
+
+.car-card {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    text-align: center;
+    transition: transform .2s ease;
+}
+
+.car-card:hover {
+    transform: translateY(-5px);
+}
+
+
+.car-img {
+    width: 100%;
+    height: 220px;  
+    object-fit: cover; 
+    border-radius: 10px;
+}
+
+.car-info h3 {
+    margin: 15px 0 5px;
+    font-size: 20px;
+    color: #222;
+}
+
+.car-price {
+    font-weight: bold;
+    color: #8a1313;
+    margin-bottom: 10px;
+}
+
+.btn-eliminar {
+    background-color: white;
+    border: 1px solid #b00000;
+    padding: 8px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #b00000;
+    transition: .2s;
+}
+
+.btn-eliminar:hover {
+    background-color: #b00000;
+    color: white;
+}
