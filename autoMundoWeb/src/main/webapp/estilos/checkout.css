@@ -5,7 +5,8 @@
     display: flex;
     gap: 40px;
     align-items: flex-start;
-    min-height: 70vh;
+    /* Let content determine height so flex children don't stretch vertically */
+    min-height: auto;
 }
 
 .panel-checkout {
@@ -15,6 +16,14 @@
     border-radius: 16px;
     padding: 40px;
     box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+/* Prevent flex items from stretching vertically and keep spacing from window edges */
+.panel-checkout,
+.panel-resumen {
+    align-self: flex-start;
+    height: auto;
+    box-sizing: border-box;
 }
 
 .seccion h2 {
@@ -152,6 +161,10 @@
 }
 
 .resumen-contenido {
+    box-sizing: border-box;
+}
+
+.resumen-contenido {
     background-color: var(--color-bg-footer);
     color: white;
     border-radius: 16px;
@@ -194,7 +207,8 @@
 @media (max-width: 1130px) {
     .contenedor-principal {
         flex-direction: column;
-        padding: 30px 15px;
+        padding: 20px;
+        gap: 24px;
     }
     .panel-checkout, .panel-resumen {
         width: 100%;

@@ -13,7 +13,8 @@ body {
     display: flex;
     gap: 40px;
     align-items: flex-start;
-    min-height: 70vh;
+    /* Allow height to be determined by content so items don't stretch vertically */
+    min-height: auto;
 }
 
 .panel-productos {
@@ -23,6 +24,12 @@ body {
     border-radius: 16px;
     padding: 35px;
     box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+.panel-productos,
+.carrito-panel-der {
+    align-self: flex-start;
+    height: auto;
 }
 
 .panel-productos-header {
@@ -149,30 +156,35 @@ hr.separador {
 }
 
 /* Panel derecho */
-.carrito-panel-der {
+.panel-resumen {
     flex: 1;
     min-width: 340px;
-    background-color: var(--color-bg-footer);
-    color: var(--color-white);
-    border-radius: 16px;
-    padding: 35px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
     top: 30px;
-    align-self: flex-start;    
+    align-self: flex-start;
+}
+
+.resumen-contenido {
+    background-color: var(--color-bg-footer);
+    color: white;
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    text-align: center;
 }
 
 .resumen-texto {
     font-size: 19px;
     opacity: 0.9;
+    margin-bottom: 8px;
 }
 
 .resumen-total {
-    font-size: 34px;
+    font-size: 36px;
     font-weight: bold;
     margin: 10px 0 40px;
 }
 
-.boton-pagar-grande {
+.boton-pagar {
     width: 100%;
     padding: 18px;
     background-color: var(--color-accent-muted);
@@ -185,7 +197,7 @@ hr.separador {
     transition: all 0.3s;
 }
 
-.boton-pagar-grande:hover {
+.boton-pagar:hover {
     background-color: var(--color-accent-muted-hover);
     transform: translateY(-3px);
     box-shadow: 0 10px 30px rgba(0,0,0,0.4);
@@ -195,14 +207,19 @@ hr.separador {
 @media (max-width: 1130px) {
     .contenedor-principal {
         flex-direction: column;
-        padding: 20px 15px;
+        padding: 20px;
         gap: 25px;
+        box-sizing: border-box;
+    }
+
+    .panel-resumen {
+        width: 100%;
     }
 
     .panel-productos,
     .carrito-panel-der {
         width: 100%;
-        padding: 25px;
+
     }
 
     .carrito-panel-der {
@@ -214,7 +231,7 @@ hr.separador {
     }
 
     .producto-img {
-        width: 100%;
+        align-self: center;
         height: 200px;
     }
 
