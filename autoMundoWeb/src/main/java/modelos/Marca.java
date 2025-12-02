@@ -2,6 +2,7 @@ package modelos;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,7 +28,7 @@ public class Marca implements Serializable {
     @Column(nullable = false, length = 100, unique = true)
     private String nombre;
 
-    @OneToMany(mappedBy = "marca")
+    @OneToMany(mappedBy = "marca", fetch = FetchType.LAZY)
     private List<Modelo> modelos;
 
     public Marca() {
