@@ -1,1 +1,3 @@
 /autoMundoWeb/target/
+/autoMundoWeb/src/main/resources/META-INF/persistence.xml
+/autoMundoWeb/nb-configuration.xml
