@@ -11,8 +11,6 @@
     </head>
     <body>
 
-        <%@include file="partials/header.jspf" %> 
-
         <main>
             <section class="login-section">
 

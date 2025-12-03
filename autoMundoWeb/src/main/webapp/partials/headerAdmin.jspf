@@ -1,20 +1,14 @@
 <%@page import="modelos.RolUsuario"%>
 <%@page import="modelos.Usuario"%>
 <%
-    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); 
-    response.setHeader("Pragma", "no-cache"); 
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    response.setHeader("Pragma", "no-cache");
     response.setDateHeader("Expires", 0);
-    
-    Usuario usuario = (Usuario) session.getAttribute("usuario");
+
+    Usuario usuario = (Usuario) session.getAttribute("usuarioActual");
 
     if (usuario == null || !usuario.getRol().equals(RolUsuario.ADMINISTRADOR)) {
-        String referer = request.getHeader("Referer");
-
-        if (referer != null) {
-            response.sendRedirect(referer);
-        } else {
-            response.sendRedirect("inicioSesion.jsp");
-        }
+        response.sendRedirect("logout");
         return;
     }
 %>
