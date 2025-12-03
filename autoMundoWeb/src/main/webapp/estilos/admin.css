@@ -1,3 +1,4 @@
+
 .navegacion-admin {
     background: var(--color-bg-header);
     padding: 12px 50px;
@@ -27,7 +28,8 @@
 .admin-contenido h1 {
     font-size: 48px;
     color: var(--color-bg-footer);
-    margin-bottom: 15px;
+    margin-bottom: 25px;
+    text-align: center;
 }
 
 .estadisticas {
@@ -45,10 +47,14 @@
     align-items: center;
 }
 
-.filtros input {
+.filtros input,
+.filtros select {
     padding: 10px;
-    width: 320px;
     border: 2px solid var(--color-bg-footer);
+}
+
+.filtros input {
+    width: 320px;
 }
 
 .filtros button {
@@ -56,12 +62,9 @@
     background: var(--color-bg-footer);
     color: white;
     border: none;
+    cursor: pointer;
 }
 
-.filtros select {
-    padding: 10px;
-    border: 2px solid var(--color-bg-footer);
-}
 
 .tabla-usuarios {
     width: 100%;
@@ -85,6 +88,22 @@
     border: 2px solid var(--color-bg-footer);
     background: transparent;
     color: var(--color-bg-footer);
+    cursor: pointer;
+}
+
+.btn-eliminar {
+    border: 1px solid #B00020;
+    padding: 8px 18px;
+    background: white;
+    color: #B00020;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.btn-eliminar:hover {
+    background-color: #B00020;
+    color: white;
 }
 
 .modal {
@@ -114,89 +133,91 @@
     cursor: pointer;
 }
 
-.modal-contenido h2 {
-    font-size: 36px;
-    margin-bottom: 20px;
-    color: var(--color-bg-footer);
-}
-
-.modal-contenido label {
-    margin-top: 10px;
-    display: block;
-}
-
-.modal-contenido input {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    background: #e7e7e7;
-    border: none;
-}
-
-.btn-primario {
-    margin-top: 20px;
-    padding: 10px;
-    width: 100%;
-    background: var(--color-bg-footer);
-    color: white;
-    border: none;
-}
-
-.acciones-secundarias {
-    margin-top: 20px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.btn-secundario {
-    border: 2px solid var(--color-bg-footer);
-    padding: 10px 20px;
-    background: transparent;
-}
-
-.btn-eliminar {
-    border: 2px solid #B00020;
-    padding: 10px 20px;
-    background: transparent;
-    color: #B00020;
-}
 
 .form-alta {
     background: #ffffff;
-    padding: 30px;
-    width: 500px;
+    padding: 40px;
+    width: 100%;          
+    max-width: 1100px;    /* Ancho para permitir dos columnas */
+    margin: 0 auto;       /* Centrado */
     border-radius: 8px;
-    box-shadow: 0 0 8px #0002;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .form-alta label {
     display: block;
     margin-top: 15px;
+    margin-bottom: 5px;
     color: #600000;
+    font-weight: 500;
 }
 
 .form-alta input,
 .form-alta select,
 .form-alta textarea {
     width: 100%;
-    padding: 12px;
-    margin-top: 5px;
-    border: 2px solid #600000;
-    background: #f1f1f1;
+    padding: 10px;
+    border: 1px solid #ccc; 
+    border-bottom: 2px solid #600000;
+    background: #f9f9f9;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
 
-.form-alta button {
-    margin-top: 25px;
+.form-alta button.btn-primario {
+    margin-top: 30px;
     width: 100%;
+    padding: 12px;
+    background: var(--color-bg-footer);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 4px;
 }
 
+
+.form-grid {
+    display: flex;       
+    gap: 50px;            
+    align-items: flex-start;
+}
+
+.form-col {
+    flex: 1;           
+    min-width: 0;
+}
+
+.form-col-right {
+    border-left: 1px solid #e0e0e0;
+    padding-left: 50px;
+}
+
+.feature-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 12px;
+}
+
+@media (max-width: 768px) {
+    .form-grid {
+        flex-direction: column; 
+        gap: 20px;
+    }
+    .form-col-right {
+        border-left: none;
+        padding-left: 0;
+        border-top: 1px solid #eee;
+        padding-top: 20px;
+    }
+}
 
 .car-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
     gap: 30px;
 }
-
 .car-card {
     background: white;
     padding: 15px;
@@ -205,42 +226,22 @@
     text-align: center;
     transition: transform .2s ease;
 }
-
 .car-card:hover {
     transform: translateY(-5px);
 }
-
-
 .car-img {
     width: 100%;
     height: 220px;  
     object-fit: cover; 
     border-radius: 10px;
 }
-
 .car-info h3 {
     margin: 15px 0 5px;
     font-size: 20px;
     color: #222;
 }
-
 .car-price {
     font-weight: bold;
     color: #8a1313;
     margin-bottom: 10px;
-}
-
-.btn-eliminar {
-    background-color: white;
-    border: 1px solid #b00000;
-    padding: 8px 18px;
-    border-radius: 6px;
-    cursor: pointer;
-    color: #b00000;
-    transition: .2s;
-}
-
-.btn-eliminar:hover {
-    background-color: #b00000;
-    color: white;
 }

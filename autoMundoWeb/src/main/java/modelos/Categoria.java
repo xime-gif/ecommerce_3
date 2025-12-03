@@ -28,9 +28,6 @@ public class Categoria implements Serializable {
     @Column(nullable = false, length = 100, unique = true)
     private String nombre;
 
-    @Column(length = 500)
-    private String descripcion;
-
     @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY)
     private List<Vehiculo> vehiculos;
 
@@ -51,14 +48,6 @@ public class Categoria implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
     }
 
     public List<Vehiculo> getVehiculos() {

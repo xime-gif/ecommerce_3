@@ -1,62 +1,69 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+/* Archivo: src/main/java/bo/AltasBajasBo.java */
 package bo;
 
-import daos.ImagenVehiculoDAO;
+import daos.CaracteristicaDAO;
 import daos.VehiculoDAO;
-import java.util.List;
+import modelos.Caracteristica;
 import modelos.ImagenVehiculo;
 import modelos.Vehiculo;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- *
- * Clase Bo para admin altas y bajas
- */
 public class AltasBajasBo {
 
     private final VehiculoDAO vehiculoDAO = new VehiculoDAO();
-    private final ImagenVehiculoDAO imagenDAO = new ImagenVehiculoDAO();
+    private final CaracteristicaDAO caracteristicaDAO = new CaracteristicaDAO();
 
-    /**
-     * Registrar un nuevo vehículo
-     * @param vehiculo
-     * @param urlImagen
-     * @return guardado
-     */
     public Vehiculo altaVehiculo(Vehiculo vehiculo, String urlImagen) {
-        Vehiculo guardado = vehiculoDAO.insertar(vehiculo);
+        
+        List<Caracteristica> caracteristicasOriginales = vehiculo.getCaracteristicas();
 
-        if (guardado != null && urlImagen != null && !urlImagen.isBlank()) {
+        if (caracteristicasOriginales != null && !caracteristicasOriginales.isEmpty()) {
+            List<Caracteristica> listaProcesada = new ArrayList<>();
+
+            for (Caracteristica c : caracteristicasOriginales) {
+                
+                Caracteristica existente = caracteristicaDAO.buscarPorNombre(c.getNombre());
+
+                if (existente != null) {
+
+                    listaProcesada.add(existente);
+                } else {
+                    
+                    caracteristicaDAO.crear(c);
+                    listaProcesada.add(c);
+                }
+            }
+    
+            vehiculo.setCaracteristicas(listaProcesada);
+        }
+        
+        if (urlImagen != null && !urlImagen.isBlank()) {
             ImagenVehiculo img = new ImagenVehiculo();
-            img.setId(guardado.getId());
             img.setUrl(urlImagen);
             img.setEsPrincipal(true);
-            img.setVehiculo(vehiculo);
-
-            imagenDAO.insertar(img);
+            img.setVehiculo(vehiculo); 
+    
+            if (vehiculo.getImagenes() == null) {
+                vehiculo.setImagenes(new ArrayList<>());
+            }
+            
+            vehiculo.getImagenes().add(img);
         }
-
-        return guardado;
+        
+        return vehiculoDAO.insertar(vehiculo);
     }
 
-    /**
-     * Eliminar un vehículo por ID
-     * @param idVehiculo
-     * @return vehiculoDAO
-     */
-    public boolean bajaVehiculo(Long idVehiculo) {
-        imagenDAO.eliminarPorVehiculo(idVehiculo);
-        return vehiculoDAO.eliminar(idVehiculo);
-    }
 
-    /**
-     * Obtener todos los autos (para mostrarlos en la página de bajas)
-     * @return lista
-     */
     public List<Vehiculo> obtenerAutos() {
         return vehiculoDAO.buscarTodos();
     }
 
+    
+    public void bajaVehiculo(Long id) {
+        Vehiculo v = vehiculoDAO.buscarPorId(id);
+        if (v != null) {
+            vehiculoDAO.eliminar(v);
+        }
+    }
 }

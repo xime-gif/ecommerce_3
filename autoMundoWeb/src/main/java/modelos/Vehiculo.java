@@ -8,10 +8,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable; // Importante
+import jakarta.persistence.ManyToMany; // Importante
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.io.Serializable;
+import java.util.ArrayList; // Importante
 import java.util.List;
 
 /**
@@ -31,29 +34,11 @@ public class Vehiculo implements Serializable {
     @Column(nullable = false, length = 255)
     private String nombre;
 
-    @Column(nullable = false, length = 500)
-    private String descripcion;
-
     @Column(nullable = false)
     private Double precio;
 
     @Column(nullable = false)
     private Integer existencias;
-
-    @Column(nullable = false)
-    private Integer kilometraje;
-
-    @Column(nullable = false)
-    private Integer anio;
-
-    @Column(nullable = false, length = 100)
-    private String motor;
-
-    @Column(nullable = false, length = 50)
-    private String transmision;
-
-    @Column(nullable = false, length = 50)
-    private String color;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoriaId", nullable = false)
@@ -68,6 +53,15 @@ public class Vehiculo implements Serializable {
 
     @OneToMany(mappedBy = "vehiculo")
     private List<Resenia> resenias;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "vehiculo_caracteristica",
+        joinColumns = @JoinColumn(name = "vehiculo_id"),
+        inverseJoinColumns = @JoinColumn(name = "caracteristica_id")
+    )
+    
+    private List<Caracteristica> caracteristicas = new ArrayList<>();
 
     public Vehiculo() {
     }
@@ -88,14 +82,6 @@ public class Vehiculo implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
     public Double getPrecio() {
         return precio;
     }
@@ -110,46 +96,6 @@ public class Vehiculo implements Serializable {
 
     public void setExistencias(Integer existencias) {
         this.existencias = existencias;
-    }
-
-    public Integer getKilometraje() {
-        return kilometraje;
-    }
-
-    public void setKilometraje(Integer kilometraje) {
-        this.kilometraje = kilometraje;
-    }
-
-    public Integer getAnio() {
-        return anio;
-    }
-
-    public void setAnio(Integer anio) {
-        this.anio = anio;
-    }
-
-    public String getMotor() {
-        return motor;
-    }
-
-    public void setMotor(String motor) {
-        this.motor = motor;
-    }
-
-    public String getTransmision() {
-        return transmision;
-    }
-
-    public void setTransmision(String transmision) {
-        this.transmision = transmision;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
     }
 
     public Categoria getCategoria() {
@@ -183,5 +129,16 @@ public class Vehiculo implements Serializable {
     public void setResenias(List<Resenia> resenias) {
         this.resenias = resenias;
     }
+    
+    public List<Caracteristica> getCaracteristicas() {
+        return caracteristicas;
+    }
 
+    public void setCaracteristicas(List<Caracteristica> caracteristicas) {
+        this.caracteristicas = caracteristicas;
+    }
+
+    public void agregarCaracteristica(Caracteristica c) {
+        this.caracteristicas.add(c);
+    }
 }

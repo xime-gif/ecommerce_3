@@ -1,67 +1,77 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="jakarta.tags.core" %> <%-- LIBRERÍA OBLIGATORIA --%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>AutoZone - Chevrolet Aveo Sedán</title>
-        <link rel="stylesheet" href="estilos/estiloGeneral.css">
-        <link rel="stylesheet" href="estilos/producto.css">
+        <%-- Título dinámico --%>
+        <title>AutoZone - ${vehiculo.nombre}</title>
+        
+        <%-- Rutas corregidas para CSS --%>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/estilos/estiloGeneral.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/estilos/producto.css">
     </head>
     <body>
         
         <%@include file="partials/header.jspf" %>
-<main>
-        <section class="producto-container">
-            
-            <div class="imagen-detalle-contenedor">
-                <img src="imagenes/aveo.jpg" alt="Chevrolet Aveo Sedán">
-            </div>
-
-            <div class="barra-info-producto">
-                <h1>Chevrolet Aveo Sedán</h1>
-                <span class="precio-grande">$35,000</span>
-            </div>
-
-            <div class="caracteristicas-grid">
+        
+        <main>
+            <section class="producto-container">
                 
-                <div class="feature-item">
-                    <img src="imagenes/icon_Caracteristicas/icon_Caracteristica_1.avif" alt="Alarma">
-                    <p>Alarma antirrobo.</p>
-                </div>
-                
-                <div class="feature-item">
-                    <img src="imagenes/icon_Caracteristicas/icon_Caracteristica_1.avif" alt="Cámara">
-                    <p>Cámara de visión trasera.</p>
-                </div>
-                
-                <div class="feature-item">
-                    <img src="imagenes/icon_Caracteristicas/icon_Caracteristica_1.avif" alt="Estabilidad">
-                    <p>Control de estabilidad StabiliTrak.</p>
+                <%-- 1. IMAGEN DINÁMICA --%>
+                <div class="imagen-detalle-contenedor">
+                    <c:choose>
+                        <%-- Si el vehículo tiene imágenes en la BD, muestra la primera --%>
+                        <c:when test="${not empty vehiculo.imagenes}">
+                            <img src="${pageContext.request.contextPath}/${vehiculo.imagenes[0].url}" 
+                                 alt="${vehiculo.nombre}"
+                                 onerror="this.src='${pageContext.request.contextPath}/imagenes/default_car.jpg'"> 
+                        </c:when>
+                        <%-- Si no tiene, muestra una por defecto --%>
+                        <c:otherwise>
+                            <img src="${pageContext.request.contextPath}/imagenes/default_car.jpg" alt="Sin imagen">
+                        </c:otherwise>
+                    </c:choose>
                 </div>
 
-                <div class="feature-item">
-                    <img src="imagenes/icon_Caracteristicas/icon_Caracteristica_1.avif" alt="Motor">
-                    <p>Motor 1.5L de 4 cilindros con 98 HP, 105 lb-pie de torque.</p>
+                <%-- 2. INFORMACIÓN DINÁMICA --%>
+                <div class="barra-info-producto">
+                    <h1>${vehiculo.nombre}</h1>
+                    <span class="precio-grande">$ ${vehiculo.precio}</span>
                 </div>
-                
-                <div class="feature-item">
-                    <img src="imagenes/icon_Caracteristicas/icon_Caracteristica_1.avif" alt="Transmisión">
-                    <p>Transmisión manual de 6 velocidades y automática CVT.</p>
-                </div>
-                
-                <div class="feature-item">
-                    <img src="imagenes/icon_Caracteristicas/icon_Caracteristica_1.avif" alt="Suspensión">
-                    <p>Dirección electroasistida y suspensión delantera tipo McPherson.</p>
-                </div>
-            </div>
 
-            <div class="barra-accion">
-                <button class="btn-accion">COMPRAR AHORA</button>
-                <button class="btn-accion">AÑADIR AL CARRITO</button>
-            </div>
+                <%-- 3. CARACTERÍSTICAS DINÁMICAS (Bucle) --%>
+                <div class="caracteristicas-grid">
+                    
+                    <%-- Recorre la lista de características guardadas en la BD --%>
+                    <c:forEach var="car" items="${vehiculo.caracteristicas}">
+                        <div class="feature-item">
+                            <%-- Icono de la característica --%>
+                            <img src="${pageContext.request.contextPath}/${car.rutaIcono}" 
+                                 alt="Icono"
+                                 onerror="this.src='${pageContext.request.contextPath}/imagenes/icon_Caracteristicas/default.png'">
+                            
+                            <%-- Descripción de la característica --%>
+                            <p>${car.nombre}</p>
+                        </div>
+                    </c:forEach>
+                    
+                    <c:if test="${empty vehiculo.caracteristicas}">
+                        <p style="text-align: center; color: gray;">No hay características registradas para este vehículo.</p>
+                    </c:if>
+                </div>
 
-        </section>
-</main>        
+                <%-- 4. BOTONES (Funcionales para el carrito) --%>
+                <div class="barra-accion">
+                    <form action="${pageContext.request.contextPath}/carrito" method="POST">
+                        <input type="hidden" name="idVehiculo" value="${vehiculo.id}">
+                        <button type="button" class="btn-accion">COMPRAR AHORA</button>
+                        <button type="submit" name="accion" value="agregar" class="btn-accion">AÑADIR AL CARRITO</button>
+                    </form>
+                </div>
+
+            </section>
+        </main>        
         <%@include file="partials/footer.jspf" %>
         
     </body>

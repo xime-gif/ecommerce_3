@@ -19,4 +19,6 @@ public class CategoriaDAO extends BaseDAO<Categoria, Long> {
         
         return lista.isEmpty() ? null : lista.get(0);
     }
+    
+    
 }
