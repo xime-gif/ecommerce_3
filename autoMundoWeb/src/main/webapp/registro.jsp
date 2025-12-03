@@ -36,7 +36,7 @@
 
                 <center>
                 <p class="texto-login">
-                    ¿Ya tienes cuenta? <a href="login.jsp">Inicia sesión</a>
+                    ¿Ya tienes cuenta? <a href="inicioSesion.jsp">Inicia sesión</a>
                 </p>
                 </center>
             </div>
