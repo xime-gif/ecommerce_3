@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -17,7 +18,7 @@
             <h1 class="titulo-catalogo">Catálogo</h1>
             
             <div class="buscador">
-                <input type="text">
+                <input type="text" name="q">
             </div>
             
             <h2 class="subtitulo-catalogo">Precios</h2>
@@ -31,40 +32,35 @@
             </div>
             
             <div class="categorias">
-                <a>Autos</a>
-                <a>Pickups</a>
-                <a>Vans & Comerciales</a>
-                <a>Deportivos</a>
-                <a>Eléctricos</a>
+                <a href="?categoria=Auto">Autos</a>
+                <a href="?categoria=Pickup">Pickups</a>
+                <a href="?categoria=Van">Vans & Comerciales</a>
+                <a href="?categoria=Deportivo">Deportivos</a>
+                <a href="?categoria=Electrico">Eléctricos</a>
             </div>
             
             <hr class="divider">
             
             <div class="car-grid">
-            
-                <div class="car-card">
+                
+                <c:forEach var="v" items="${listaVehiculos}">
+                    
+                    <div class="car-card">
                     <div class="car-info">
-                        <h3>Chevrolet Groove</h3>
-                        <a class="car-link">Más información</a>
-                        <p class="car-price">$20,000</p>
+                        
+                        <h3>${v.modelo}</h3>
+                        
+                        <a class="car-link" href="detalleVehiculo?id=${v.id}">Más información</a>
+                        <p class="car-price">$${v.precio}</p>
                     </div>
                 </div>
+                    
+                </c:forEach>
+                
+                <c:if test="${empty listaVehiculos}">
+                    <p>No hay vehículos disponibles.</p>
+                </c:if>
 
-                <div class="car-card">
-                    <div class="car-info">
-                        <h3>Chevrolet Captiva</h3>
-                        <a class="car-link">Más información</a>
-                        <p class="car-price">$105,000</p>
-                    </div>
-                </div>
-
-                <div class="car-card">
-                    <div class="car-info">
-                        <h3>Chevrolet Aveo Sedán</h3>
-                        <a class="car-link">Más información</a>
-                        <p class="car-price">$35,000</p>
-                    </div>
-                </div>
             </div>
         </div>
         </main>
