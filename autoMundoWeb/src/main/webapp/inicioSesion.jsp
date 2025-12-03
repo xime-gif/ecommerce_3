@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="estilos/estiloForms.css">
     </head>
     <body>
-
+        <%@include file="partials/header.jspf" %>
         <main>
             <section class="login-section">
 

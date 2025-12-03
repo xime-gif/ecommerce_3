@@ -3,23 +3,22 @@
 <%
     String urlActual = request.getRequestURI();
 
-    if (session.getAttribute("usuarioActual") == null
-            && !urlActual.contains("inicioSesion.jsp")
-            && !urlActual.contains("registro.jsp")) {
+    if (!urlActual.contains("inicioSesion.jsp") && !urlActual.contains("registro.jsp")) {
+        if (session.getAttribute("usuarioActual") == null) {
+            response.sendRedirect("inicioSesion.jsp");
+            return;
+        } else {
+            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+            response.setHeader("Pragma", "no-cache");
+            response.setDateHeader("Expires", 0);
 
-        response.sendRedirect("inicioSesion.jsp");
-        return;
-    }
+            Usuario usuario = (Usuario) session.getAttribute("usuarioActual");
 
-    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-    response.setHeader("Pragma", "no-cache");
-    response.setDateHeader("Expires", 0);
-
-    Usuario usuario = (Usuario) session.getAttribute("usuarioActual");
-
-    if (usuario == null || !usuario.getRol().equals(RolUsuario.CLIENTE)) {
-        response.sendRedirect("logout");
-        return;
+            if (usuario == null || !usuario.getRol().equals(RolUsuario.CLIENTE)) {
+                response.sendRedirect("logout");
+                return;
+            }
+        }
     }
 %>
 
