@@ -27,4 +27,44 @@ public class ImagenVehiculoDAO extends BaseDAO<ImagenVehiculo, Long> {
         
         return lista.isEmpty() ? null : lista.get(0);
     }
+    
+    /**
+     * Insertar una imagen asociada a un vehículo.
+     */
+    public ImagenVehiculo insertar(ImagenVehiculo img) {
+        em.getTransaction().begin();
+        em.persist(img);
+        em.getTransaction().commit();
+        return img;
+    }
+
+    /**
+     * Eliminar una imagen por ID.
+     */
+    public boolean eliminar(Long id) {
+        ImagenVehiculo img = em.find(ImagenVehiculo.class, id);
+        if (img == null) {
+            return false;
+        }
+
+        em.getTransaction().begin();
+        em.remove(img);
+        em.getTransaction().commit();
+
+        return true;
+    }
+
+    /**
+     * Eliminar todas las imágenes relacionadas a un vehículo.
+     */
+    public void eliminarPorVehiculo(Long idVehiculo) {
+        em.getTransaction().begin();
+
+        em.createQuery(
+                "DELETE FROM ImagenVehiculo i WHERE i.vehiculo.id = :idVehiculo")
+                .setParameter("idVehiculo", idVehiculo)
+                .executeUpdate();
+
+        em.getTransaction().commit();
+    }
 }

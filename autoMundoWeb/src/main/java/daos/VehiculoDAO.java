@@ -42,4 +42,32 @@ public class VehiculoDAO extends BaseDAO<Vehiculo, Long> {
                 .setParameter("max", max)
                 .getResultList();
     }
+    
+    /**
+     * Inserta un vehículo en la base de datos.
+     * @param vehiculo Vehículo a guardar.
+     * @return El vehículo guardado con ID autogenerado.
+     */
+    public Vehiculo insertar(Vehiculo vehiculo) {
+        em.getTransaction().begin();
+        em.persist(vehiculo);
+        em.getTransaction().commit();
+        return vehiculo;
+    }
+
+    /**
+     * Elimina un vehículo por ID.
+     * @param id ID del vehículo a eliminar.
+     * @return true si se eliminó, false si no existía.
+     */
+    public boolean eliminar(Long id) {
+        Vehiculo v = em.find(Vehiculo.class, id);
+        if (v == null) {
+            return false;
+        }
+        em.getTransaction().begin();
+        em.remove(v);
+        em.getTransaction().commit();
+        return true;
+    }
 }
