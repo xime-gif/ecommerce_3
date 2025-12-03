@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import modelos.Usuario;
 import java.io.IOException;
+import modelos.CarritoDeCompras;
 
 @WebServlet("/inicioSesion")
 public class LoginServlet extends HttpServlet {
@@ -40,6 +41,7 @@ public class LoginServlet extends HttpServlet {
 
         HttpSession sesion = request.getSession();
         sesion.setAttribute("usuarioActual", usuario);
+        sesion.setAttribute("carrito", new CarritoDeCompras());
 
         switch (usuario.getRol()) {
             case ADMINISTRADOR:

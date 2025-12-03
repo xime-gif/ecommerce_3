@@ -8,6 +8,12 @@
         response.sendRedirect("inicioSesion.jsp");
         return;
     }
+
+    if (session.getAttribute("usuarioActual") != null) {
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
+    }
 %>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -25,7 +31,7 @@
 
     <% if (session.getAttribute("usuarioActual") != null) { %>
     <div style="color: white; margin-left: auto;">
-        <a href="inicioSesion.jsp" style="color: white; text-decoration: none;">
+        <a href="logout" style="color: white; text-decoration: none;">
             <i class="fa-solid fa-right-from-bracket"></i> Salir
         </a>
     </div>

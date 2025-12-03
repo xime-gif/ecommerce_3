@@ -1,3 +1,24 @@
+<%@page import="modelos.RolUsuario"%>
+<%@page import="modelos.Usuario"%>
+<%
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); 
+    response.setHeader("Pragma", "no-cache"); 
+    response.setDateHeader("Expires", 0);
+    
+    Usuario usuario = (Usuario) session.getAttribute("usuario");
+
+    if (usuario == null || !usuario.getRol().equals(RolUsuario.ADMINISTRADOR)) {
+        String referer = request.getHeader("Referer");
+
+        if (referer != null) {
+            response.sendRedirect(referer);
+        } else {
+            response.sendRedirect("inicioSesion.jsp");
+        }
+        return;
+    }
+%>
+
 <nav class="navegacion-admin">
     <img src="imagenes/logo.png" class="logo" alt="AutoZone" height="60">
 
@@ -5,6 +26,6 @@
         <li><a href="adminUsuarios.jsp" class="active">Usuarios</a></li>
         <li><a href="admin?accion=altaForm" class="active">Altas</a></li>
         <li><a href="adminBajas.jsp">Bajas</a></li>
-        <li><a href="inicioSesion.jsp">Cerrar Sesión</a></li>
+        <li><a href="logout">Cerrar Sesión</a></li>
     </ul>
 </nav>
