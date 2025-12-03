@@ -17,15 +17,27 @@ public class UsuarioDAO extends BaseDAO<Usuario, Long> {
      * autenticación.
      *
      * @param correo El correo electrónico del usuario.
-     * @param contrasenia La contraseña del usuario.
+     * @param contrasena La contraseña del usuario.
      * @return El objeto Usuario si las credenciales son correctas, de lo
      * contrario null.
      */
-    public Usuario buscarPorCredenciales(String correo, String contrasenia) {
+    public Usuario buscarPorCredenciales(String correo, String contrasena) {
         try {
-            return em.createQuery("SELECT u FROM Usuario u WHERE u.correoElectronico = :correo AND u.contrasenia = :contrasenia", Usuario.class)
+            return em.createQuery(
+                    "SELECT u FROM Usuario u WHERE u.correo = :correo AND u.contrasena = :contrasena", Usuario.class)
                     .setParameter("correo", correo)
-                    .setParameter("contrasenia", contrasenia)
+                    .setParameter("contrasena", contrasena)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    public Usuario buscarPorCorreo(String correo) {
+        try {
+            return em.createQuery(
+                    "SELECT u FROM Usuario u WHERE u.correo = :correo", Usuario.class)
+                    .setParameter("correo", correo)
                     .getSingleResult();
         } catch (NoResultException e) {
             return null;

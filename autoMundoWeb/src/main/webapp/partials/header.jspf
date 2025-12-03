@@ -1,7 +1,7 @@
 <%
     String urlActual = request.getRequestURI();
 
-    if (session.getAttribute("usuario") == null
+    if (session.getAttribute("usuarioActual") == null
             && !urlActual.contains("inicioSesion.jsp")
             && !urlActual.contains("registro.jsp")) {
 
@@ -9,7 +9,6 @@
         return;
     }
 %>
-
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <nav class="navegacion">
@@ -24,7 +23,7 @@
         <li><a href="resenias.jsp" class="<%= request.getRequestURI().contains("resenias.jsp") ? "active" : ""%>">Reseñas</a></li>
     </ul>
 
-    <% if (session.getAttribute("usuario") != null) { %>
+    <% if (session.getAttribute("usuarioActual") != null) { %>
     <div style="color: white; margin-left: auto;">
         <a href="inicioSesion.jsp" style="color: white; text-decoration: none;">
             <i class="fa-solid fa-right-from-bracket"></i> Salir

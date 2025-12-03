@@ -3,31 +3,30 @@ package pruebas;
 import daos.UsuarioDAO;
 import modelos.RolUsuario;
 import modelos.Usuario;
+import seguridad.Encriptador;
 
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
-/**
- *
- * @author Jp
- */
 public class Pruebas {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+
+        // Usuario cliente
         Usuario nuevoUsuario = new Usuario();
         nuevoUsuario.setNombre("Juan Pérez");
         nuevoUsuario.setCorreo("juan@ejemplo.com");
-        nuevoUsuario.setContrasena("12345678");
+        nuevoUsuario.setContrasena(Encriptador.hashPassword("juan123"));
         nuevoUsuario.setRol(RolUsuario.CLIENTE);
         nuevoUsuario.setEsActivo(true);
-        
-        UsuarioDAO usuarioDAO = new UsuarioDAO();
         usuarioDAO.crear(nuevoUsuario);
-    }
 
+        // Usuario admin
+        Usuario admin = new Usuario();
+        admin.setNombre("Admin Principal");
+        admin.setCorreo("admin@autozone.com");
+        admin.setContrasena(Encriptador.hashPassword("admin123"));
+        admin.setRol(RolUsuario.ADMINISTRADOR);
+        admin.setEsActivo(true);
+        usuarioDAO.crear(admin);
+
+    }
 }

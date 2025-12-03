@@ -1,4 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -9,7 +11,8 @@
     </head>
     <body>
 
-        <%@include file="partials/header.jspf" %>
+        <%@include file="partials/header.jspf" %> 
+
         <main>
             <section class="login-section">
 
@@ -19,13 +22,17 @@
 
                 <div class="login-panel">
                     <h1>Inicio Sesión</h1>
+                    <c:if test="${not empty error}">
+                        <p class="error-msg">${error}</p>
+                    </c:if>
 
-                    <form class="formulario-login">
+                    <form class="formulario-login" action="inicioSesion" method="post">
+
                         <label for="correo">Correo</label>
                         <input type="email" id="correo" name="correo" required>
 
-                        <label for="contrasenia">Contraseña</label>
-                        <input type="password" id="contrasenia" name="contrasenia" required>
+                        <label for="contrasena">Contraseña</label>
+                        <input type="password" id="contrasena" name="contrasena" required>
 
                         <div class="contenedor-botones-login">
                             <button type="submit" class="btn-form btn-primario">Ingresar</button>
@@ -40,6 +47,7 @@
 
             </section>
         </main>
+
         <%@include file="partials/footer.jspf" %>
 
     </body>
