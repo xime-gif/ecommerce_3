@@ -16,12 +16,24 @@ public class VehiculoBO {
     private final VehiculoDAO vehiculoDAO = new VehiculoDAO();
     
     public void guardar(Vehiculo v) {
+        if (v == null) {
+            throw new IllegalArgumentException("El vehículo no puede ser nulo.");
+        }
+        
         if (v.getPrecio() <= 0) {
             throw new IllegalArgumentException("El precio no puede ser negativo ni 0.");
         }
         
         if (v.getExistencias() < 0) {
             throw new IllegalArgumentException("Las existencias no pueden ser negativas.");
+        }
+        
+        if (v.getModelo() == null || v.getModelo().getId() == null) {
+            throw new IllegalArgumentException("El modelo es obligatorio.");
+        }
+
+        if (v.getCategoria() == null || v.getCategoria().getId() == null) {
+            throw new IllegalArgumentException("La categoría es obligatoria.");
         }
         
         if (v.getId() == null) {

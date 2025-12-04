@@ -21,7 +21,7 @@ public class VehiculoDAO extends BaseDAO<Vehiculo, Long> {
      * @return Una lista de vehículos que pertenecen a la marca especificada.
      */
     public List<Vehiculo> buscarPorMarca(String marca) {
-        return em.createQuery("SELECT v FROM Vehiculo v WHERE v.marca.nombre = :marca", Vehiculo.class)
+        return em.createQuery("SELECT v FROM Vehiculo v WHERE v.modelo.marca.nombre = :marca", Vehiculo.class)
                 .setParameter("marca", marca)
                 .getResultList();
     }

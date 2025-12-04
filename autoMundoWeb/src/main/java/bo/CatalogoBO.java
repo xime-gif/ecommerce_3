@@ -6,7 +6,9 @@ package bo;
 
 import daos.ImagenVehiculoDAO;
 import daos.VehiculoDAO;
+import java.util.ArrayList;
 import java.util.List;
+import modelos.ImagenVehiculo;
 import modelos.Vehiculo;
 
 /**
@@ -20,7 +22,12 @@ public class CatalogoBO {
     
     public List<Vehiculo> obtenerCatalogo() {
         List<Vehiculo> lista = vehiculoDAO.buscarTodos();
-        lista.forEach(v -> v.setImagenes(imagenDAO.buscarPorVehiculo(v.getId())));
+        
+        lista.forEach(v -> {
+            List<ImagenVehiculo> imagenes = imagenDAO.buscarPorVehiculo(v.getId());
+            v.setImagenes(imagenes != null ? imagenes : new ArrayList<>());
+        });
+                
         return lista;
     }
     
@@ -28,7 +35,8 @@ public class CatalogoBO {
         Vehiculo v = vehiculoDAO.buscarPorId(id);
         
         if (v != null) {
-            v.setImagenes(imagenDAO.buscarPorVehiculo(id));
+            List<ImagenVehiculo> imagenes = imagenDAO.buscarPorVehiculo(v.getId());
+            v.setImagenes(imagenes != null ? imagenes : new ArrayList<>());
         }
         
         return v;

@@ -2,13 +2,13 @@ body {
     margin: 0;
     font-family: "Gerogia";
     background: #d8cfc0;
+    color: #243141;
 }
 
 .titulo-catalogo {
     text-align: center;
     font-size: 48px;
     margin-top: 40px;
-    color: #243141;
 }
 
 /* Barra buscadora */
@@ -18,8 +18,9 @@ body {
     margin: 25px auto;
     align-items: center;
     background: white;
-    border-radius: 30px;
-    padding: 5px 15px;
+    border-radius: 40px;
+    padding: 8px 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
 }
 
 .buscador input {
@@ -35,7 +36,7 @@ body {
     width: 60%;
     margin: auto;
     font-size: 26px;
-    color: #243141;
+    font-weight: bold;
 }
 
 /* Rango de precios */
@@ -50,28 +51,89 @@ body {
 .precio {
     padding: 10px 15px;
     border-radius: 20px;
-    border: none;
+    border: 1px solid #24314155;
     outline: none;
+    font-size: 16px;
+    width: 120px;
+}
+
+/* Botón para buscar */
+.boton-buscar {
+    background: #243141;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.boton-buscar:hover {
+    background: #33475f;
+}
+
+/* Selector de marcas */
+.selector-marcas {
+    width: 200px;
+    padding: 12px;
+    font-size: 18px;
+    border-radius: 25px;
+    border: 2px solid #243141;
+    background: white;
+    outline: none;
+    transition: 0.2s ease;
+}
+
+.selector-marcas:hover,
+.selector-marcas:focus {
+    border-color: #3e536b;
+    box-shadow: 0 0 6px rgba(36, 49, 65, 0.3);
 }
 
 /* Categorías */
 .categorias {
-    width: 60%;
-    margin: 20px auto 10px;
+    width: 70%;
+    margin: 20px auto;
     display: flex;
-    gap: 25px;
+    justify-content: center;
+    gap: 40px;
 }
 
 .categorias a {
-    font-size: 18px;
+    font-size: 20px;
     cursor: pointer;
     padding-bottom: 5px;
     transition: all 0.2s ease;
+    color: #243141;
 }
 
-.categorias a:hover,
-.categorias a:active {
+.categorias a:hover {
     border-bottom: 2px solid #243141;
+    color: #000;
+}
+
+.active-cat {
+    background: #243141 !important;
+    color: white !important;
+    transform: scale(1.03);
+}
+
+/* Select de marcas */
+select {
+    width: 60%;
+    margin: 20px auto;
+    display: block;
+    padding: 12px 18px;
+    font-size: 16px;
+    border-radius: 12px;
+    border: 1px solid #24314155;
+    background: white;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+select:hover {
+    border-color: #243141;
 }
 
 /* Separador */
@@ -79,7 +141,7 @@ body {
     width: 60%;
     border: none;
     border-bottom: 1px solid #243141;
-    margin: auto;
+    margin: 30px auto;
 }
 
 /* Sección de autos */
@@ -87,15 +149,23 @@ body {
     width: 75%;
     margin: 40px auto;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 35px;
 }
 
 .car-card {
-    background: #243141;
-    border-radius: 10px;
+    background: #ffffff;
+    border-radius: 14px;
     overflow: hidden;
-    color: white;
+    border: 1px solid #24314122;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.car-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
 .car-card img {
@@ -106,21 +176,30 @@ body {
 
 .car-info {
     padding: 15px;
+    color: #243141;
 }
 
 .car-info h3 {
-    margin: 0;
-    font-size: 20px;
-}
-
-.car-link {
-    font-size: 14px;
-    color: white;
-    cursor: pointer;
+    margin: 0 0 8px;
+    font-size: 22px;
+    font-weight: bold;
 }
 
 .car-price {
-    margin-top: 5px;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
+    margin: 10px 0;
+    color: #243141;
+}
+
+/* Link para el auto */
+.car-link {
+    font-size: 14px;
+    color: #243141;
+    text-decoration: underline;
+    transition: 0.2s ease;
+}
+
+.car-link:hover {
+    color: #50637a;
 }
