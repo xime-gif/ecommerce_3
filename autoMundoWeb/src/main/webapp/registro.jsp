@@ -1,4 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -6,44 +8,69 @@
         <title>AutoZone - Crear Cuenta</title>
         <link rel="stylesheet" href="estilos/estiloGeneral.css">
         <link rel="stylesheet" href="estilos/estiloForms.css">
+        <link rel="stylesheet" href="estilos/registro.css">
+        
     </head>
+
     <body>
 
         <%@include file="partials/header.jspf" %>
-<main>
-        <section class="registro-section">
 
-            <div class="registro-panel">
-                <center><h1>Crear Cuenta</h1></center>
+        <main>
+            <section class="registro-section">
+                <div class="registro-panel fade-in">
 
-                <form class="formulario-registro">
-                    <label for="nombreCompleto">Nombre Completo</label>
-                    <input type="text" id="nombreCompleto" name="nombreCompleto" required>
+                    <center><h1>Crear Cuenta</h1></center>
+                    
+                    <c:if test="${not empty error}">
+                        <p class="error-msg show">${error}</p>
+                    </c:if>
 
-                    <label for="correo">Correo</label>
-                    <input type="email" id="correo" name="correo" required>
+                    <c:if test="${not empty exito}">
+                        <p class="exito-msg show">${exito}</p>
+                    </c:if>
 
-                    <label for="contrasenia">Contraseña</label>
-                    <input type="password" id="contrasenia" name="contrasenia" required>
+                    <form class="formulario-registro" action="registro" method="post">
 
-                    <label for="confirmarContrasenia">Confirmar Contraseña</label>
-                    <input type="password" id="confirmarContrasenia" name="confirmarContrasenia" required>
+                        <div class="campo">
+                            <label>Nombre Completo</label>
+                            <input type="text" id="nombreCompleto" name="nombreCompleto">
+                        </div>
 
-                    <div class="contenedor-boton-registrar">
-                        <center><button type="submit" class="btn-form btn-primario">Registrarme</button></center>
-                    </div>
-                </form>
+                        <div class="campo">
+                            <label>Correo</label>
+                            <input type="email" id="correo" name="correo">
+                        </div>
 
-                <center>
-                <p class="texto-login">
-                    ¿Ya tienes cuenta? <a href="inicioSesion.jsp">Inicia sesión</a>
-                </p>
-                </center>
-            </div>
+                        <div class="campo">
+                            <label>Contraseña</label>
+                            <input type="password" id="contrasenia" name="contrasenia">
+                        </div>
 
-        </section>
-</main>
+                        <div class="campo">
+                            <label>Confirmar Contraseña</label>
+                            <input type="password" id="confirmarContrasenia" name="confirmarContrasenia">
+                        </div>
+
+                        <p id="error-js" class="error-msg"></p>
+
+                        <div class="contenedor-boton-registrar">
+                            <center><button type="submit" class="btn-form btn-primario btn-anim">Registrarme</button></center>
+                        </div>
+                    </form>
+
+                    <center>
+                        <p class="texto-login">
+                            ¿Ya tienes cuenta?
+                            <a href="inicioSesion.jsp" class="link-login">Inicia sesión</a>
+                        </p>
+                    </center>
+
+                </div>
+            </section>
+        </main>
+
         <%@include file="partials/footer.jspf" %>
-
+        
     </body>
 </html>

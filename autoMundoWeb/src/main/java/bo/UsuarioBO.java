@@ -45,29 +45,52 @@ public class UsuarioBO {
      *
      * @param nombre
      * @param correo
-     * @param contrasenaPlano
+     * @param contrasena
+     * @param confirmar
      * @return
      */
-    public Usuario registrarCliente(String nombre, String correo, String contrasenaPlano) {
-        if (nombre == null || correo == null || contrasenaPlano == null
-                || nombre.isBlank() || correo.isBlank() || contrasenaPlano.isBlank()) {
-            return null;
+    public String registrarCliente(String nombre, String correo, String contrasena, String confirmar) {
+
+        if (nombre == null || nombre.isBlank() || nombre.length() < 3) {
+            return "El nombre debe tener al menos 3 caracteres.";
         }
 
-        // correo ya usado
-        Usuario existente = usuarioDAO.buscarPorCorreo(correo);
-        if (existente != null) {
-            return null;
+        if (correo == null || correo.isBlank()) {
+            return "Debes ingresar un correo.";
+        }
+
+        if (!correo.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+            return "El correo no tiene un formato válido.";
+        }
+
+        if (usuarioDAO.buscarPorCorreo(correo) != null) {
+            return "Ya existe una cuenta con ese correo.";
+        }
+
+        if (contrasena == null || contrasena.length() < 8) {
+            return "La contraseña debe tener al menos 8 caracteres.";
+        }
+
+        if (!contrasena.matches(".*[0-9].*")) {
+            return "La contraseña debe contener al menos un número.";
+        }
+
+        if (!contrasena.matches(".*[A-Za-z].*")) {
+            return "La contraseña debe contener letras.";
+        }
+
+        if (!contrasena.equals(confirmar)) {
+            return "Las contraseñas no coinciden.";
         }
 
         Usuario nuevo = new Usuario();
         nuevo.setNombre(nombre);
         nuevo.setCorreo(correo);
-        nuevo.setContrasena(Encriptador.hashPassword(contrasenaPlano));
+        nuevo.setContrasena(Encriptador.hashPassword(contrasena));
         nuevo.setRol(RolUsuario.CLIENTE);
         nuevo.setEsActivo(true);
 
         usuarioDAO.crear(nuevo);
-        return nuevo;
+        return null;
     }
 }

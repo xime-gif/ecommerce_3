@@ -155,6 +155,20 @@
     .login-panel h1 {
         font-size: 36px;
     }
+
+    .error-msg {
+        color: #e63946;
+        background: #ffe5e5;
+        padding: 10px;
+        border-radius: 6px;
+    }
+
+    .exito-msg {
+        color: #2a9d8f;
+        background: #d1f7f3;
+        padding: 10px;
+        border-radius: 6px;
+    }
 }
 
 
