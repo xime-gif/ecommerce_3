@@ -1,6 +1,7 @@
 package daos;
 
 import java.util.List;
+import jakarta.persistence.EntityManager;
 import modelos.ImagenVehiculo;
 
 /**
@@ -12,59 +13,102 @@ public class ImagenVehiculoDAO extends BaseDAO<ImagenVehiculo, Long> {
     public ImagenVehiculoDAO() {
         super(ImagenVehiculo.class);
     }
-    
+
     public List<ImagenVehiculo> buscarPorVehiculo(Long idVehiculo) {
-        return em.createQuery("SELECT i FROM ImagenVehiculo i WHERE i.vehiculo.id = :idVehiculo", ImagenVehiculo.class)
-                .setParameter("idVehiculo", idVehiculo)
-                .getResultList();
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            return em.createQuery(
+                    "SELECT i FROM ImagenVehiculo i WHERE i.vehiculo.id = :idVehiculo",
+                    ImagenVehiculo.class
+            )
+            .setParameter("idVehiculo", idVehiculo)
+            .getResultList();
+
+        } finally {
+            em.close();
+        }
     }
-    
+
     public ImagenVehiculo buscarPrincipal(Long idVehiculo) {
-        List<ImagenVehiculo> lista = em.createQuery(
-                "SELECT i FROM ImagenVehiculo i WHERE i.vehiculo.id = :idVehiculo AND i.esPrincipal = true", ImagenVehiculo.class)
-                .setParameter("idVehiculo", idVehiculo)
-                .getResultList();
-        
-        return lista.isEmpty() ? null : lista.get(0);
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            List<ImagenVehiculo> lista = em.createQuery(
+                    "SELECT i FROM ImagenVehiculo i WHERE i.vehiculo.id = :idVehiculo AND i.esPrincipal = true",
+                    ImagenVehiculo.class
+            )
+            .setParameter("idVehiculo", idVehiculo)
+            .getResultList();
+
+            return lista.isEmpty() ? null : lista.get(0);
+
+        } finally {
+            em.close();
+        }
     }
-    
+
     /**
      * Insertar una imagen asociada a un vehículo.
      */
     public ImagenVehiculo insertar(ImagenVehiculo img) {
-        em.getTransaction().begin();
-        em.persist(img);
-        em.getTransaction().commit();
-        return img;
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(img);
+            em.getTransaction().commit();
+            return img;
+
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) em.getTransaction().rollback();
+            throw e;
+
+        } finally {
+            em.close();
+        }
     }
 
     /**
      * Eliminar una imagen por ID.
      */
     public boolean eliminar(Long id) {
-        ImagenVehiculo img = em.find(ImagenVehiculo.class, id);
-        if (img == null) {
-            return false;
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            ImagenVehiculo img = em.find(ImagenVehiculo.class, id);
+            if (img == null) return false;
+
+            em.getTransaction().begin();
+            em.remove(img);
+            em.getTransaction().commit();
+            return true;
+
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) em.getTransaction().rollback();
+            throw e;
+
+        } finally {
+            em.close();
         }
-
-        em.getTransaction().begin();
-        em.remove(img);
-        em.getTransaction().commit();
-
-        return true;
     }
 
     /**
      * Eliminar todas las imágenes relacionadas a un vehículo.
      */
     public void eliminarPorVehiculo(Long idVehiculo) {
-        em.getTransaction().begin();
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
 
-        em.createQuery(
-                "DELETE FROM ImagenVehiculo i WHERE i.vehiculo.id = :idVehiculo")
-                .setParameter("idVehiculo", idVehiculo)
-                .executeUpdate();
+            em.createQuery("DELETE FROM ImagenVehiculo i WHERE i.vehiculo.id = :idVehiculo")
+                    .setParameter("idVehiculo", idVehiculo)
+                    .executeUpdate();
 
-        em.getTransaction().commit();
+            em.getTransaction().commit();
+
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) em.getTransaction().rollback();
+            throw e;
+
+        } finally {
+            em.close();
+        }
     }
 }

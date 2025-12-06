@@ -6,80 +6,84 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * Implementación abstracta y genérica de un Data Access Object (DAO) utilizando
- * JPA. Contiene la lógica común para las operaciones CRUD.
- *
- * @param <T> El tipo de la entidad.
- * @param <ID> El tipo del identificador (ID) de la entidad.
- */
 public abstract class BaseDAO<T, ID extends Serializable> implements IBaseDAO<T, ID> {
 
-    protected final EntityManager em;
     private final Class<T> entityClass;
 
-    /**
-     * Constructor que inicializa el DAO con la clase de la entidad específica.
-     *
-     * @param entityClass El objeto Class de la entidad que este DAO manejará.
-     */
     public BaseDAO(Class<T> entityClass) {
-        this.em = JPAUtil.getEntityManager();
         this.entityClass = entityClass;
     }
 
     @Override
     public void crear(T entity) {
-        em.getTransaction().begin();
+        EntityManager em = JPAUtil.getEntityManager();
         try {
+            em.getTransaction().begin();
             em.persist(entity);
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            throw new RuntimeException("Error al persistir la entidad de tipo " + entityClass.getSimpleName(), e);
+            throw new RuntimeException("Error al crear " + entityClass.getSimpleName(), e);
+        } finally {
+            em.close();
         }
     }
 
     @Override
     public T buscarPorId(ID id) {
-        return em.find(entityClass, id);
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            return em.find(entityClass, id);
+        } finally {
+            em.close();
+        }
     }
 
     @Override
     public void actualizar(T entity) {
-        em.getTransaction().begin();
+        EntityManager em = JPAUtil.getEntityManager();
         try {
+            em.getTransaction().begin();
             em.merge(entity);
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            throw new RuntimeException("Error al actualizar la entidad de tipo " + entityClass.getSimpleName(), e);
+            throw new RuntimeException("Error al actualizar " + entityClass.getSimpleName(), e);
+        } finally {
+            em.close();
         }
     }
 
     @Override
     public void eliminar(T entity) {
-        em.getTransaction().begin();
+        EntityManager em = JPAUtil.getEntityManager();
         try {
-            // Asegura que la entidad esté gestionada por el EntityManager antes de eliminarla.
+            em.getTransaction().begin();
             em.remove(em.contains(entity) ? entity : em.merge(entity));
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            throw new RuntimeException("Error al eliminar la entidad de tipo " + entityClass.getSimpleName(), e);
+            throw new RuntimeException("Error al eliminar " + entityClass.getSimpleName(), e);
+        } finally {
+            em.close();
         }
     }
 
     @Override
     public List<T> buscarTodos() {
-        CriteriaQuery<T> cq = em.getCriteriaBuilder().createQuery(entityClass);
-        cq.select(cq.from(entityClass));
-        return em.createQuery(cq).getResultList();
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            CriteriaQuery<T> cq = em.getCriteriaBuilder().createQuery(entityClass);
+            cq.select(cq.from(entityClass));
+            return em.createQuery(cq).getResultList();
+        } finally {
+            em.close();
+        }
     }
 }

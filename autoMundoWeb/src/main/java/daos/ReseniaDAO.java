@@ -1,8 +1,9 @@
 package daos;
 
+import jakarta.persistence.EntityManager;
+import java.util.List;
 import modelos.Resenia;
 import modelos.Vehiculo;
-import java.util.List;
 
 /**
  * DAO para gestionar las operaciones de persistencia de la entidad Resenia.
@@ -20,8 +21,20 @@ public class ReseniaDAO extends BaseDAO<Resenia, Long> {
      * @return Una lista de reseñas del vehículo.
      */
     public List<Resenia> buscarPorVehiculo(Vehiculo vehiculo) {
-        return em.createQuery("SELECT r FROM Resenia r WHERE r.vehiculo = :vehiculo", Resenia.class)
-                .setParameter("vehiculo", vehiculo)
-                .getResultList();
+
+        EntityManager em = JPAUtil.getEntityManager();
+
+        try {
+            return em.createQuery(
+                    "SELECT r FROM Resenia r WHERE r.vehiculo = :vehiculo",
+                    Resenia.class
+            )
+            .setParameter("vehiculo", vehiculo)
+            .getResultList();
+
+        } finally {
+            em.close();
+        }
     }
 }
+    

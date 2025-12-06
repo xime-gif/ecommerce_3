@@ -1,6 +1,7 @@
 package daos;
 
 import modelos.Usuario;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 
 /**
@@ -22,25 +23,33 @@ public class UsuarioDAO extends BaseDAO<Usuario, Long> {
      * contrario null.
      */
     public Usuario buscarPorCredenciales(String correo, String contrasena) {
+        EntityManager em = JPAUtil.getEntityManager();
         try {
             return em.createQuery(
-                    "SELECT u FROM Usuario u WHERE u.correo = :correo AND u.contrasena = :contrasena", Usuario.class)
+                    "SELECT u FROM Usuario u WHERE u.correo = :correo AND u.contrasena = :contrasena",
+                    Usuario.class)
                     .setParameter("correo", correo)
                     .setParameter("contrasena", contrasena)
                     .getSingleResult();
         } catch (NoResultException e) {
             return null;
+        } finally {
+            em.close();
         }
     }
 
     public Usuario buscarPorCorreo(String correo) {
+        EntityManager em = JPAUtil.getEntityManager();
         try {
             return em.createQuery(
-                    "SELECT u FROM Usuario u WHERE u.correo = :correo", Usuario.class)
+                    "SELECT u FROM Usuario u WHERE u.correo = :correo",
+                    Usuario.class)
                     .setParameter("correo", correo)
                     .getSingleResult();
         } catch (NoResultException e) {
             return null;
+        } finally {
+            em.close();
         }
     }
 }

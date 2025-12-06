@@ -51,11 +51,23 @@
     background: #e0e0e0;
 }
 
-
 .contenedor-botones-login {
     display: flex;
     gap: 20px;
     margin-top: 15px;
+}
+
+.contenedor-boton-registro {
+    display: flex;
+    justify-content: center;   
+    gap: 20px;                  
+    margin-top: 25px;
+}
+
+.contenedor-boton-registro .btn-form {
+    width: 160px;               
+    text-align: center;         
+    padding: 12px 0;            
 }
 
 .btn-form {
@@ -116,14 +128,6 @@
     gap: 15px;
 }
 
-.contenedor-boton-registrar {
-    margin-top: 20px;
-}
-
-.contenedor-boton-registrar .btn-form {
-    width: 200px;
-}
-
 .texto-login {
     margin-top: 25px;
     font-size: 14px;
@@ -169,6 +173,5 @@
         padding: 10px;
         border-radius: 6px;
     }
+
 }
-
-

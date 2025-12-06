@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="estilos/estiloGeneral.css">
         <link rel="stylesheet" href="estilos/estiloForms.css">
         <link rel="stylesheet" href="estilos/registro.css">
-        
+
     </head>
 
     <body>
@@ -21,7 +21,7 @@
                 <div class="registro-panel fade-in">
 
                     <center><h1>Crear Cuenta</h1></center>
-                    
+
                     <c:if test="${not empty error}">
                         <p class="error-msg show">${error}</p>
                     </c:if>
@@ -54,8 +54,8 @@
 
                         <p id="error-js" class="error-msg"></p>
 
-                        <div class="contenedor-boton-registrar">
-                            <center><button type="submit" class="btn-form btn-primario btn-anim">Registrarme</button></center>
+                        <div class="contenedor-boton-registro">
+                            <center><button type="submit" id="btn-registrar" class="btn-form btn-primario btn-anim">Registrarme</button></center>    
                         </div>
                     </form>
 
@@ -71,6 +71,7 @@
         </main>
 
         <%@include file="partials/footer.jspf" %>
-        
+
+        <script src="scripts/registro.js"></script>
     </body>
 </html>
