@@ -35,4 +35,5 @@ public class ItemCarrito implements Serializable {
     public double getSubtotal() {
         return vehiculo.getPrecio() * cantidad;
     }
+
 }

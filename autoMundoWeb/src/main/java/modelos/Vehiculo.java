@@ -16,6 +16,7 @@ import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.util.ArrayList; // Importante
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -49,18 +50,18 @@ public class Vehiculo implements Serializable {
     private Modelo modelo;
 
     @OneToMany(mappedBy = "vehiculo", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ImagenVehiculo> imagenes;
+    private List<ImagenVehiculo> imagenes = new ArrayList<>();
 
     @OneToMany(mappedBy = "vehiculo")
-    private List<Resenia> resenias;
+    private List<Resenia> resenias = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-        name = "vehiculo_caracteristica",
-        joinColumns = @JoinColumn(name = "vehiculo_id"),
-        inverseJoinColumns = @JoinColumn(name = "caracteristica_id")
+            name = "vehiculo_caracteristica",
+            joinColumns = @JoinColumn(name = "vehiculo_id"),
+            inverseJoinColumns = @JoinColumn(name = "caracteristica_id")
     )
-    
+
     private List<Caracteristica> caracteristicas = new ArrayList<>();
 
     public Vehiculo() {
@@ -129,7 +130,7 @@ public class Vehiculo implements Serializable {
     public void setResenias(List<Resenia> resenias) {
         this.resenias = resenias;
     }
-    
+
     public List<Caracteristica> getCaracteristicas() {
         return caracteristicas;
     }
@@ -141,4 +142,27 @@ public class Vehiculo implements Serializable {
     public void agregarCaracteristica(Caracteristica c) {
         this.caracteristicas.add(c);
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 97 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Vehiculo other = (Vehiculo) obj;
+        return Objects.equals(this.id, other.id);
+    }
+
 }

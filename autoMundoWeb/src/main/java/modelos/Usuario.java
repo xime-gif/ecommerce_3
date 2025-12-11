@@ -10,7 +10,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -43,13 +45,13 @@ public class Usuario implements Serializable {
     private boolean esActivo = true;
 
     @OneToMany(mappedBy = "usuario")
-    private List<Direccion> direcciones;
+    private List<Direccion> direcciones = new ArrayList<>();
 
     @OneToMany(mappedBy = "cliente")
-    private List<Pedido> pedidos;
+    private List<Pedido> pedidos = new ArrayList<>();
 
     @OneToMany(mappedBy = "cliente")
-    private List<Resenia> resenias;
+    private List<Resenia> resenias = new ArrayList<>();
 
     public Usuario() {
     }
@@ -124,6 +126,28 @@ public class Usuario implements Serializable {
 
     public void setResenias(List<Resenia> resenias) {
         this.resenias = resenias;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 71 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Usuario other = (Usuario) obj;
+        return Objects.equals(this.id, other.id);
     }
 
 }

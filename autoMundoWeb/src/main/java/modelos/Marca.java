@@ -9,7 +9,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -29,7 +31,7 @@ public class Marca implements Serializable {
     private String nombre;
 
     @OneToMany(mappedBy = "marca", fetch = FetchType.LAZY)
-    private List<Modelo> modelos;
+    private List<Modelo> modelos = new ArrayList<>();
 
     public Marca() {
     }
@@ -56,6 +58,28 @@ public class Marca implements Serializable {
 
     public void setModelos(List<Modelo> modelos) {
         this.modelos = modelos;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 37 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Marca other = (Marca) obj;
+        return Objects.equals(this.id, other.id);
     }
 
 }

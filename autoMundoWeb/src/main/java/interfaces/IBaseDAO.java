@@ -16,8 +16,9 @@ public interface IBaseDAO<T, ID extends Serializable> {
      * Persiste una nueva entidad en la base de datos.
      *
      * @param entity La entidad a guardar.
+     * @return la entidad creada.
      */
-    void crear(T entity);
+    T crear(T entity);
 
     /**
      * Busca una entidad por su identificador único.
@@ -31,15 +32,17 @@ public interface IBaseDAO<T, ID extends Serializable> {
      * Actualiza el estado de una entidad existente en la base de datos.
      *
      * @param entity La entidad con los datos actualizados.
+     * @return la entidad actualizada.
      */
-    void actualizar(T entity);
+    T actualizar(T entity);
 
     /**
      * Elimina una entidad de la base de datos.
      *
      * @param entity La entidad a eliminar.
+     * @return la entidad eliminada.
      */
-    void eliminar(T entity);
+    T eliminar(T entity);
 
     /**
      * Recupera una lista de todas las entidades de un tipo específico.

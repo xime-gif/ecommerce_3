@@ -9,6 +9,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  *
@@ -47,7 +48,7 @@ public class Direccion implements Serializable {
 
     @Column(nullable = false, length = 100)
     private String pais;
-    
+
     @ManyToOne
     @JoinColumn(name = "usuarioId")
     private Usuario usuario;
@@ -125,6 +126,36 @@ public class Direccion implements Serializable {
 
     public void setPais(String pais) {
         this.pais = pais;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 73 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Direccion other = (Direccion) obj;
+        return Objects.equals(this.id, other.id);
     }
 
 }

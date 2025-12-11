@@ -15,12 +15,13 @@ public abstract class BaseDAO<T, ID extends Serializable> implements IBaseDAO<T,
     }
 
     @Override
-    public void crear(T entity) {
+    public T crear(T entity) {
         EntityManager em = JPAUtil.getEntityManager();
         try {
             em.getTransaction().begin();
             em.persist(entity);
             em.getTransaction().commit();
+            return entity;
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
@@ -42,12 +43,13 @@ public abstract class BaseDAO<T, ID extends Serializable> implements IBaseDAO<T,
     }
 
     @Override
-    public void actualizar(T entity) {
+    public T actualizar(T entity) {
         EntityManager em = JPAUtil.getEntityManager();
         try {
             em.getTransaction().begin();
-            em.merge(entity);
+            entity = em.merge(entity);
             em.getTransaction().commit();
+            return entity;
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
@@ -59,12 +61,13 @@ public abstract class BaseDAO<T, ID extends Serializable> implements IBaseDAO<T,
     }
 
     @Override
-    public void eliminar(T entity) {
+    public T eliminar(T entity) {
         EntityManager em = JPAUtil.getEntityManager();
         try {
             em.getTransaction().begin();
             em.remove(em.contains(entity) ? entity : em.merge(entity));
             em.getTransaction().commit();
+            return entity;
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
