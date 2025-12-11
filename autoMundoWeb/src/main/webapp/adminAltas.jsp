@@ -23,6 +23,7 @@
                     <div class="form-grid">
 
                         <div class="form-col">
+
                             <h3>Datos Generales</h3>
 
                             <label>Nombre del Auto</label>
@@ -35,7 +36,8 @@
                             <select name="categoria" required>
                                 <option value="">Seleccione una categoría</option>
                                 <c:forEach var="cat" items="${categorias}">
-                                    <option value="${cat.id}">${cat.nombre}</option>
+
+                                    <option value="<c:out value='${cat.id}'/>"><c:out value='${cat.nombre}'/></option>
                                 </c:forEach>
                             </select>
 
@@ -43,53 +45,52 @@
                             <select name="modelo" required>
                                 <option value="">Seleccione un modelo</option>
                                 <c:forEach var="modelo" items="${modelos}">
-                                    <option value="${modelo.id}">${modelo.nombre}</option>
+
+                                    <option value="<c:out value='${modelo.id}'/>"><c:out value='${modelo.nombre}'/></option>
                                 </c:forEach>
                             </select>
 
-                            <label>URL de Imagen Principal</label>
-                            <input type="text" name="imagen" placeholder="imagenes/aveo.jpg" required>
+
+                            <label>Imagen Principal</label>
+                            <div class="file-selection-group">
+
+                                <input type="hidden" name="imagen" id="selectedImageURL" required>
+
+
+                                <input type="text" id="display-selectedImageURL" placeholder="Ruta de la imagen seleccionada" readonly required>
+
+                                <button type="button" class="btn-secundario btn-select-file" 
+                                        data-field-target="selectedImageURL" 
+                                        data-type="vehicle">Seleccionar</button>
+                            </div>
+
+
                         </div>
 
                         <div class="form-col form-col-right">
+
                             <h3>Características y Equipamiento</h3>
-                            <p>Ingresa la descripción y la ruta del icono (opcional).</p>
+                            <p>Ingresa la descripción y selecciona la ruta del icono (opcional).</p>
 
-                            <label>Característica 1</label>
-                            <div class="feature-row">
-                                <input type="text" name="desc1" placeholder="Descripción (Ej: Frenos ABS)">
-                                <input type="text" name="icon1" placeholder="URL Icono">
-                            </div>
 
-                            <label>Característica 2</label>
-                            <div class="feature-row">
-                                <input type="text" name="desc2" placeholder="Descripción">
-                                <input type="text" name="icon2" placeholder="URL Icono">
-                            </div>
+                            <c:forEach begin="1" end="6" var="i">
+                                <label>Característica <c:out value="${i}"/></label>
+                                <div class="feature-row">
+                                    <input type="text" name="desc<c:out value='${i}'/>" placeholder="Descripción">
 
-                            <label>Característica 3</label>
-                            <div class="feature-row">
-                                <input type="text" name="desc3" placeholder="Descripción">
-                                <input type="text" name="icon3" placeholder="URL Icono">
-                            </div>
 
-                            <label>Característica 4</label>
-                            <div class="feature-row">
-                                <input type="text" name="desc4" placeholder="Descripción">
-                                <input type="text" name="icon4" placeholder="URL Icono">
-                            </div>
+                                    <input type="hidden" name="icon<c:out value='${i}'/>" id="icon<c:out value='${i}'/>URL">
 
-                            <label>Característica 5</label>
-                            <div class="feature-row">
-                                <input type="text" name="desc5" placeholder="Descripción">
-                                <input type="text" name="icon5" placeholder="URL Icono">
-                            </div>
 
-                            <label>Característica 6</label>
-                            <div class="feature-row">
-                                <input type="text" name="desc6" placeholder="Descripción">
-                                <input type="text" name="icon6" placeholder="URL Icono">
-                            </div>
+                                    <input type="text" id="display-icon<c:out value='${i}'/>URL" placeholder="Ruta Icono" readonly>
+
+
+                                    <button type="button" class="btn-secundario btn-icon-select btn-select-file" 
+                                            data-field-target="icon<c:out value='${i}'/>URL" 
+                                            data-type="icon">Seleccionar</button>
+                                </div>
+                            </c:forEach>
+
                         </div>
                     </div>
 
@@ -101,7 +102,45 @@
             </section>
         </main>
 
+
+        <div id="imageSelectorModal" class="modal-selector">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modalTitle">Seleccionar Archivo</h2>
+                    <span class="close-button" id="closeModal">&times;</span>
+                </div>
+                <div class="modal-body">
+
+                    <button id="toggleViewButton" class="btn-secundario">Cambiar a Iconos</button>
+
+
+                    <div id="vehicleImagesGrid" class="image-selector-grid modal-grid">
+                        <c:forEach var="imgUrl" items="${imagenesDisponibles}">
+                            <div class="image-option modal-img-option" data-url="<c:out value='${imgUrl}'/>" data-type="vehicle" title="<c:out value='${imgUrl}'/>">
+                                <img src="<c:url value='${imgUrl}'/>" alt="<c:out value='Imagen ${imgUrl}'/>">
+                            </div>
+                        </c:forEach>
+                    </div>
+
+
+                    <div id="iconImagesGrid" class="image-selector-grid modal-grid" style="display: none;">
+                        <c:forEach var="iconUrl" items="${iconosDisponibles}">
+                            <div class="image-option modal-img-option" data-url="<c:out value='${iconUrl}'/>" data-type="icon" title="<c:out value='${iconUrl}'/>">
+                                <img src="<c:url value='${iconUrl}'/>" alt="<c:out value='Icono ${iconUrl}'/>">
+                            </div>
+                        </c:forEach>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
         <%@include file="partials/footer.jspf" %>
+
+
+        <script src="scripts/adminAltas.js"></script>
 
     </body>
 </html>

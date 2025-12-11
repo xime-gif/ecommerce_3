@@ -105,18 +105,6 @@
     background-color: #B00020;
     color: white;
 }
-
-.modal {
-    display: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.6);
-    justify-content: center;
-    align-items: center;
-}
-
 .modal-contenido {
     background: var(--color-bg-main);
     padding: 40px;
@@ -133,13 +121,12 @@
     cursor: pointer;
 }
 
-
 .form-alta {
     background: #ffffff;
     padding: 40px;
-    width: 100%;          
-    max-width: 1100px;    /* Ancho para permitir dos columnas */
-    margin: 0 auto;       /* Centrado */
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
@@ -157,7 +144,7 @@
 .form-alta textarea {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc; 
+    border: 1px solid #ccc;
     border-bottom: 2px solid #600000;
     background: #f9f9f9;
     border-radius: 4px;
@@ -179,13 +166,13 @@
 
 
 .form-grid {
-    display: flex;       
-    gap: 50px;            
+    display: flex;
+    gap: 50px;
     align-items: flex-start;
 }
 
 .form-col {
-    flex: 1;           
+    flex: 1;
     min-width: 0;
 }
 
@@ -194,15 +181,45 @@
     padding-left: 50px;
 }
 
+
+.file-selection-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.file-selection-group input[type="text"] {
+    flex-grow: 1;
+    cursor: default;
+}
+
 .feature-row {
     display: flex;
-    gap: 15px;
+    align-items: center;
+    gap: 10px;
     margin-bottom: 12px;
+}
+
+.feature-row input[name^="desc"] {
+    flex-grow: 1.5;
+}
+
+.feature-row input[id^="display-icon"] {
+    flex-grow: 1;
+    cursor: default;
+}
+
+
+.btn-select-file {
+    padding: 8px 12px;
+    flex-shrink: 0;
 }
 
 @media (max-width: 768px) {
     .form-grid {
-        flex-direction: column; 
+        flex-direction: column;
         gap: 20px;
     }
     .form-col-right {
@@ -231,8 +248,8 @@
 }
 .car-img {
     width: 100%;
-    height: 220px;  
-    object-fit: cover; 
+    height: 220px;
+    object-fit: cover;
     border-radius: 10px;
 }
 .car-info h3 {
@@ -244,4 +261,105 @@
     font-weight: bold;
     color: #8a1313;
     margin-bottom: 10px;
+}
+
+
+
+.modal-selector {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 700px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.close-button {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #000;
+    text-decoration: none;
+}
+
+
+.image-selector-grid.modal-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 10px 0;
+    margin: 15px 0;
+    border: none;
+    background-color: transparent;
+    justify-content: flex-start;
+}
+
+.modal-img-option {
+    width: 100px;
+    height: 80px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s ease-in-out;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+}
+
+.modal-img-option:hover {
+    border-color: #5aa9e6;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.modal-img-option.selected-image {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.7);
+    transform: scale(1.05);
+}
+
+.modal-img-option img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+#iconImagesGrid .modal-img-option img {
+    object-fit: contain;
+    padding: 5px;
+    width: 80%;
+    height: 80%;
 }

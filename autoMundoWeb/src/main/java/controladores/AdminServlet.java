@@ -11,6 +11,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import modelos.Vehiculo;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Set;
+import java.util.stream.Collectors;
+import jakarta.servlet.ServletContext;
 
 @WebServlet(name = "AdminServlet", urlPatterns = {"/admin"})
 public class AdminServlet extends HttpServlet {
@@ -19,14 +24,63 @@ public class AdminServlet extends HttpServlet {
     private final CategoriaDAO categoriaDAO = new CategoriaDAO();
     private final ModeloDAO modeloDAO = new ModeloDAO();
 
+    /**
+     * Filtra los paths para asegurarse de que terminen en una extensión de
+     * imagen válida.
+     */
+    private boolean isImageFile(String path) {
+        String lowerPath = path.toLowerCase();
+        return lowerPath.endsWith(".png")
+                || lowerPath.endsWith(".jpg")
+                || lowerPath.endsWith(".jpeg")
+                || lowerPath.endsWith(".gif")
+                || lowerPath.endsWith(".svg")
+                || lowerPath.endsWith(".avif")
+                || lowerPath.endsWith(".webp");
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String accion = request.getParameter("accion");
-        if (accion == null) accion = "lista";
+        if (accion == null) {
+            accion = "lista";
+        }
 
         switch (accion) {
             case "altaForm":
+                ServletContext context = getServletContext();
+
+                Set<String> mainResourcePaths = context.getResourcePaths("/imagenes/");
+                List<String> imagenesDisponibles;
+
+                if (mainResourcePaths != null) {
+                    imagenesDisponibles = mainResourcePaths.stream()
+                            .filter(path -> isImageFile(path) && !path.contains("/icon_Caracteristicas/"))
+                            .map(path -> path.startsWith("/") ? path.substring(1) : path)
+                            .collect(Collectors.toList());
+                } else {
+                    imagenesDisponibles = new ArrayList<>();
+                }
+
+                Collections.sort(imagenesDisponibles);
+                request.setAttribute("imagenesDisponibles", imagenesDisponibles);
+
+                Set<String> iconResourcePaths = context.getResourcePaths("/imagenes/icon_Caracteristicas/");
+                List<String> iconosDisponibles;
+
+                if (iconResourcePaths != null) {
+                    iconosDisponibles = iconResourcePaths.stream()
+                            .filter(this::isImageFile)
+                            .map(path -> path.startsWith("/") ? path.substring(1) : path)
+                            .collect(Collectors.toList());
+                } else {
+                    iconosDisponibles = new ArrayList<>();
+                }
+
+                Collections.sort(iconosDisponibles);
+                request.setAttribute("iconosDisponibles", iconosDisponibles);
+
                 request.setAttribute("categorias", categoriaDAO.buscarTodos());
                 request.setAttribute("modelos", modeloDAO.buscarTodos());
                 request.getRequestDispatcher("adminAltas.jsp").forward(request, response);
@@ -71,7 +125,7 @@ public class AdminServlet extends HttpServlet {
                 if (icon != null && !icon.trim().isEmpty()) {
                     c.setRutaIcono(icon.trim());
                 } else {
-                    c.setRutaIcono("imagenes/icon_Caracteristicas/default.png"); 
+                    c.setRutaIcono("imagenes/icon_Caracteristicas/default.png");
                 }
                 v.agregarCaracteristica(c);
             }
