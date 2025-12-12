@@ -12,6 +12,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Objects;
 
@@ -149,5 +150,13 @@ public class Pedido implements Serializable {
         final Pedido other = (Pedido) obj;
         return Objects.equals(this.id, other.id);
     }
+// Dentro de la clase Pedido.java
 
+    public java.util.Date getFechaCompraUtil() {
+        if (this.fechaCompra == null) {
+            return null;
+        }
+        // Convierte LocalDateTime a java.util.Date
+        return java.util.Date.from(this.fechaCompra.atZone(ZoneId.systemDefault()).toInstant());
+    }
 }

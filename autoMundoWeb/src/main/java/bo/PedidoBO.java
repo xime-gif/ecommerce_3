@@ -4,8 +4,10 @@
  */
 package bo;
 
+import daos.DetallePedidoDAO;
 import daos.JPAUtil;
 import daos.PedidoDAO;
+import daos.ReseniaDAO;
 import daos.VehiculoDAO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -23,6 +25,8 @@ public class PedidoBO {
 
     private final PedidoDAO pedidoDAO = new PedidoDAO();
     private final VehiculoDAO vehiculoDAO = new VehiculoDAO();
+    private final DetallePedidoDAO detallePedidoDAO = new DetallePedidoDAO();
+    private final ReseniaDAO reseniaDAO = new ReseniaDAO();
 
     /**
      * Realiza el proceso de compra, si falla algo no se completa la
@@ -122,5 +126,48 @@ public class PedidoBO {
         } else {
             throw new Exception("Pedido no encontrado ID: " + pedidoId);
         }
+    }
+    
+    /**
+     * Delega al DAO la obtención de todos los pedidos de un cliente.
+     * La lógica de JOIN FETCH, inicialización de imágenes y eliminación de duplicados 
+     * reside en el DAO para evitar la LazyInitializationException (LIE) en la capa de vista.
+     * * @param cliente El usuario cuyos pedidos se buscan.
+     * @return Una lista de Pedidos con todos los detalles y vehículos cargados.
+     */
+    public List<Pedido> obtenerPedidosPorUsuario(Usuario cliente) {
+        // Delegación directa a la capa de persistencia (DAO)
+        return pedidoDAO.obtenerPedidosPorCliente(cliente);
+    }
+
+
+  
+
+    /**
+     * Registra una reseña para un DetallePedido específico.
+     * * @param detalleId ID del detalle del pedido que se va a reseñar.
+     * @param calificacion Puntuación de la reseña.
+     * @param comentario Texto de la reseña.
+     */
+    public void registrarResenia(Long detalleId, int calificacion, String comentario) throws Exception {
+        
+        // 1. Buscar el DetallePedido (necesario para obtener el Vehiculo y el Cliente)
+        DetallePedido detalle = detallePedidoDAO.buscarPorId(detalleId);
+        
+        if (detalle == null) {
+            throw new Exception("Detalle de pedido no encontrado.");
+        }
+        
+        // 2. Crear y configurar la nueva Reseña
+        Resenia nuevaResenia = new Resenia();
+        nuevaResenia.setCalificacion(calificacion);
+        nuevaResenia.setComentario(comentario);
+        
+        // Asignar el vehículo y el cliente (a través del pedido) a la reseña
+        nuevaResenia.setVehiculo(detalle.getVehiculo()); 
+        nuevaResenia.setCliente(detalle.getPedido().getCliente()); 
+
+        // 3. Persistir la Reseña
+        reseniaDAO.crear(nuevaResenia);
     }
 }
