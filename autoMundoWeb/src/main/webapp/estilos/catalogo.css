@@ -68,10 +68,6 @@ body {
     transition: 0.2s ease;
 }
 
-.boton-buscar:hover {
-    background: #33475f;
-}
-
 /* Selector de marcas */
 .selector-marcas {
     width: 200px;
@@ -82,12 +78,6 @@ body {
     background: white;
     outline: none;
     transition: 0.2s ease;
-}
-
-.selector-marcas:hover,
-.selector-marcas:focus {
-    border-color: #3e536b;
-    box-shadow: 0 0 6px rgba(36, 49, 65, 0.3);
 }
 
 /* Categorías */
