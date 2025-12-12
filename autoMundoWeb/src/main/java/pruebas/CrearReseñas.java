@@ -49,7 +49,7 @@ public class CrearReseñas {
             System.out.println("Vehículo: " + vehiculoAReseniar.getNombre() + " (ID: " + vehiculoAReseniar.getId() + ")");
             
             // 2. Probar el método agregarResenia con datos válidos
-            System.out.println("\n--- Prueba 1: Reseña con Calificación 5 ---");
+            System.out.println("\n--- Prueba 1: Reseña con Calificación 5 (Experiencia Excelente) ---");
             probarAgregarResenia(
                 5, 
                 "El coche fue excelente, sin problemas y muy limpio. ¡Recomendado!", 
@@ -58,7 +58,7 @@ public class CrearReseñas {
             );
 
             // 3. Probar el método agregarResenia con otra reseña
-            System.out.println("\n--- Prueba 2: Reseña con Calificación 3 ---");
+            System.out.println("\n--- Prueba 2: Reseña con Calificación 3 (Experiencia Regular) ---");
             probarAgregarResenia(
                 3, 
                 "El vehículo estaba bien, pero el aire acondicionado no enfriaba lo suficiente. Necesita mantenimiento.", 
@@ -66,8 +66,39 @@ public class CrearReseñas {
                 vehiculoAReseniar.getId()
             );
             
-            // 4. Probar un caso de error (Vehículo inexistente)
-            System.out.println("\n--- Prueba 3: Intentando reseñar un Vehículo inexistente (ID 99999) ---");
+            // --- INICIO DE NUEVAS PRUEBAS ---
+            
+            // 4. Nueva reseña con calificación 4
+            System.out.println("\n--- Prueba 3: Reseña con Calificación 4 (Muy buena, con detalle menor) ---");
+            probarAgregarResenia(
+                4, 
+                "Muy buen rendimiento de gasolina. El único detalle es que el GPS tardó en arrancar.", 
+                usuarioPrueba.getId(), 
+                vehiculoAReseniar.getId()
+            );
+
+            // 5. Nueva reseña con calificación 5 (Máxima)
+            System.out.println("\n--- Prueba 4: Reseña con Calificación 5 (Confirmación de calidad) ---");
+            probarAgregarResenia(
+                5, 
+                "Viaje impecable. Absolutamente recomendable para trayectos largos. Un 10/10.", 
+                usuarioPrueba.getId(), 
+                vehiculoAReseniar.getId()
+            );
+
+            // 6. Nueva reseña con calificación 2
+            System.out.println("\n--- Prueba 5: Reseña con Calificación 2 (Experiencia Negativa) ---");
+            probarAgregarResenia(
+                2, 
+                "Lamentablemente, la entrega se retrasó y el vehículo tenía un rayón que no estaba documentado.", 
+                usuarioPrueba.getId(), 
+                vehiculoAReseniar.getId()
+            );
+            
+            // --- FIN DE NUEVAS PRUEBAS ---
+            
+            // 7. Probar un caso de error (Vehículo inexistente)
+            System.out.println("\n--- Prueba 6: Intentando reseñar un Vehículo inexistente (ID 99999) ---");
             probarAgregarResenia(
                 4, 
                 "Esto debe fallar.", 
@@ -99,9 +130,9 @@ public class CrearReseñas {
         );
 
         if (exito) {
-            System.out.println("   ✅ Éxito: Reseña guardada.");
+            System.out.println("    ✅ Éxito: Reseña guardada.");
         } else {
-            System.out.println("   ❌ Falla: No se pudo guardar la reseña. (Verifique los logs)");
+            System.out.println("    ❌ Falla: No se pudo guardar la reseña. (Verifique los logs)");
         }
     }
 }
