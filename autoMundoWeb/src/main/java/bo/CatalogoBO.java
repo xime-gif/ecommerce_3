@@ -20,17 +20,6 @@ public class CatalogoBO {
     private final VehiculoDAO vehiculoDAO = new VehiculoDAO();
     private final ImagenVehiculoDAO imagenDAO = new ImagenVehiculoDAO();
 
-    public List<Vehiculo> obtenerCatalogo() {
-        List<Vehiculo> lista = vehiculoDAO.buscarTodos();
-
-        lista.forEach(v -> {
-            List<ImagenVehiculo> imagenes = imagenDAO.buscarPorVehiculo(v.getId());
-            v.setImagenes(imagenes != null ? imagenes : new ArrayList<>());
-        });
-
-        return lista;
-    }
-
     public Vehiculo obtenerVehiculo(Long id) {
         Vehiculo v = vehiculoDAO.buscarPorId(id);
 
@@ -41,13 +30,18 @@ public class CatalogoBO {
 
         return v;
     }
+    
+    public List<Vehiculo> filtrarCatalogo(String texto, String marca, Long idCategoria, Double min, Double max) {
 
-    public List<Vehiculo> filtrarPorCategoria(Long idCategoria) {
-        return vehiculoDAO.buscarPorCategoria(idCategoria);
-    }
+        List<Vehiculo> lista = vehiculoDAO.filtrar(texto, marca, idCategoria, min, max);
 
-    public List<Vehiculo> filtrarPorMarca(String marca) {
-        return vehiculoDAO.buscarPorMarca(marca);
+        // Agregar imágenes
+        lista.forEach(v -> {
+            List<ImagenVehiculo> imagenes = imagenDAO.buscarPorVehiculo(v.getId());
+            v.setImagenes(imagenes != null ? imagenes : new ArrayList<>());
+        });
+
+        return lista;
     }
 
 }

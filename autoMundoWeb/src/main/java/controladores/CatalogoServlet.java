@@ -9,7 +9,6 @@ import daos.CategoriaDAO;
 import daos.MarcaDAO;
 import daos.VehiculoDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -28,7 +27,6 @@ public class CatalogoServlet extends HttpServlet {
     private final CatalogoBO catalogoBO = new CatalogoBO();
     private final MarcaDAO marcaDAO = new MarcaDAO();
     private final CategoriaDAO categoriaDAO = new CategoriaDAO();
-    private final VehiculoDAO vehiculoDAO = new VehiculoDAO();
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -41,41 +39,34 @@ public class CatalogoServlet extends HttpServlet {
         String precioMin = request.getParameter("min");
         String precioMax = request.getParameter("max");
 
-        List<Vehiculo> vehiculos;
+        Long categoriaId = null;
+        Double min = null, max = null;
 
         // Filtros de búsqueda
         try {
 
-            if (marca != null && !marca.isBlank()) {
-                vehiculos = catalogoBO.filtrarPorMarca(marca);
+            if (categoria != null && !categoria.isBlank())
+                categoriaId = Long.parseLong(categoria);
 
-            } else if (categoria != null && !categoria.isBlank()) {
-                Long idCategoria = Long.parseLong(categoria);
-                vehiculos = catalogoBO.filtrarPorCategoria(idCategoria);
+            if (precioMin != null && !precioMin.isBlank())
+                min = Double.parseDouble(precioMin);
 
-            } else if (precioMin != null && precioMax != null
-                    && !precioMin.isBlank() && !precioMax.isBlank()) {
+            if (precioMax != null && !precioMax.isBlank())
+                max = Double.parseDouble(precioMax);
 
-                double min = Double.parseDouble(precioMin);
-                double max = Double.parseDouble(precioMax);
-
-                vehiculos = vehiculoDAO.buscarPorRangoPrecio(min, max);
-
-            } else {
-                // Sin filtros
-                vehiculos = catalogoBO.obtenerCatalogo();
+            } catch (Exception e) {
+                // Cualquier fallo manda la excepción
+                e.printStackTrace();
             }
 
-        } catch (Exception e) {
-            // Cualquier fallo muestra el catálogo completo
-            vehiculos = catalogoBO.obtenerCatalogo();
-        }
-
         // Cargar catálogos auxiliares
+        List<Vehiculo> vehiculos = catalogoBO.filtrarCatalogo(busqueda, marca, categoriaId, min, max);
+        
         request.setAttribute("marcas", marcaDAO.buscarTodos());
         request.setAttribute("categorias", categoriaDAO.buscarTodos());
 
         // Mantener filtros seleccionados
+        request.setAttribute("q", busqueda);
         request.setAttribute("marcaSel", marca);
         request.setAttribute("categoriaSel", categoria);
         request.setAttribute("minSel", precioMin);

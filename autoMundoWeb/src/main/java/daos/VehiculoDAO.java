@@ -3,76 +3,15 @@ package daos;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import modelos.Vehiculo;
 
 public class VehiculoDAO extends BaseDAO<Vehiculo, Long> {
 
     public VehiculoDAO() {
         super(Vehiculo.class);
-    }
-
-    /**
-     * Busca vehículos filtrando por el nombre de su marca.
-     *
-     * @param marca El nombre de la marca a buscar.
-     * @return Una lista de vehículos que pertenecen a la marca especificada.
-     */
-    public List<Vehiculo> buscarPorMarca(String marca) {
-        EntityManager em = JPAUtil.getEntityManager();
-        try {
-            return em.createQuery(
-                    "SELECT DISTINCT v FROM Vehiculo v LEFT JOIN FETCH v.imagenes WHERE v.modelo.marca.nombre = :marca",
-                    Vehiculo.class
-            )
-                    .setParameter("marca", marca)
-                    .getResultList();
-        } finally {
-            em.close();
-        }
-    }
-
-    public List<Vehiculo> buscarPorCategoria(Long idCategoria) {
-        EntityManager em = JPAUtil.getEntityManager();
-        try {
-            return em.createQuery(
-                    "SELECT DISTINCT v FROM Vehiculo v LEFT JOIN FETCH v.imagenes WHERE v.categoria.id = :idCategoria",
-                    Vehiculo.class
-            )
-                    .setParameter("idCategoria", idCategoria)
-                    .getResultList();
-        } finally {
-            em.close();
-        }
-    }
-
-    public List<Vehiculo> buscarPorModelo(String modelo) {
-        EntityManager em = JPAUtil.getEntityManager();
-        try {
-            return em.createQuery(
-                    "SELECT DISTINCT v FROM Vehiculo v LEFT JOIN FETCH v.imagenes WHERE v.modelo.nombre = :modelo",
-                    Vehiculo.class
-            )
-                    .setParameter("modelo", modelo)
-                    .getResultList();
-        } finally {
-            em.close();
-        }
-    }
-
-    public List<Vehiculo> buscarPorRangoPrecio(double min, double max) {
-        EntityManager em = JPAUtil.getEntityManager();
-        try {
-            return em.createQuery(
-                    "SELECT DISTINCT v FROM Vehiculo v LEFT JOIN FETCH v.imagenes WHERE v.precio BETWEEN :min AND :max",
-                    Vehiculo.class
-            )
-                    .setParameter("min", min)
-                    .setParameter("max", max)
-                    .getResultList();
-        } finally {
-            em.close();
-        }
     }
 
     public Vehiculo buscarPorIdConImagenes(Long id) {
@@ -172,6 +111,48 @@ public class VehiculoDAO extends BaseDAO<Vehiculo, Long> {
             Vehiculo actualizado = em.merge(vehiculo);
             em.getTransaction().commit();
             return actualizado;
+        } finally {
+            em.close();
+        }
+    }
+    
+    public List<Vehiculo> filtrar(String modelo, String marca, Long categoria, Double min, Double max) {
+        EntityManager em = JPAUtil.getEntityManager();
+
+        try {
+            StringBuilder jpql = new StringBuilder(
+                "SELECT DISTINCT v FROM Vehiculo v LEFT JOIN FETCH v.imagenes WHERE 1=1"
+            );
+
+            Map<String, Object> params = new HashMap<>();
+            
+            if (modelo != null && !modelo.isBlank()) {
+                jpql.append(" AND LOWER(v.nombre) LIKE :texto");
+                params.put("texto", "%" + modelo.toLowerCase() + "%");
+            }
+
+            if (marca != null && !marca.isBlank()) {
+                jpql.append(" AND v.modelo.marca.nombre = :marca");
+                params.put("marca", marca);
+            }
+
+            if (categoria != null) {
+                jpql.append(" AND v.categoria.id = :categoria");
+                params.put("categoria", categoria);
+            }
+
+            if (min != null && max != null) {
+                jpql.append(" AND v.precio BETWEEN :min AND :max");
+                params.put("min", min);
+                params.put("max", max);
+            }
+
+            TypedQuery<Vehiculo> query = em.createQuery(jpql.toString(), Vehiculo.class);
+
+            params.forEach(query::setParameter);
+
+            return query.getResultList();
+
         } finally {
             em.close();
         }

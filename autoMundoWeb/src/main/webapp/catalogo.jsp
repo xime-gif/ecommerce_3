@@ -32,21 +32,33 @@
                         <input type="number" name="min" class="precio" value="${minSel}">
                         <span>y</span>
                         <input type="number" name="max" class="precio" value="${maxSel}">
-                        <button class="boton-buscar">Buscar</button>
+                        <button type="submit" class="boton-buscar">Buscar</button>
+                        <button type="button" class="boton-limpiar" onclick="window.location='catalogo'">
+                            Limpiar
+                        </button>
                     </div>
 
                     <!-- ===================== CATEGORÍAS ===================== -->
                     <div class="categorias">
                         <c:forEach var="c" items="${categorias}">
-                            <a href="catalogo?categoria=${c.id}"
-                               class="${categoriaSel == c.id.toString() ? 'active-cat' : ''}">
-                                ${c.nombre}
-                            </a>
+                            <a href="catalogo?categoria=${c.id}
+                                            &q=${param.q}
+                                            &marca=${marcaSel}
+                                            &min=${minSel}
+                                            &max=${maxSel}"
+                              class="${categoriaSel == c.id.toString() ? 'active-cat' : ''}">
+                               ${c.nombre}
+                           </a>
                         </c:forEach>
                     </div>
 
                     <!-- ===================== MARCAS ===================== -->
                     <h2 class="subtitulo-catalogo">Marcas</h2>
+                    
+                    <input type="hidden" name="q" value="${param.q}">
+                    <input type="hidden" name="categoria" value="${categoriaSel}">
+                    <input type="hidden" name="min" value="${minSel}">
+                    <input type="hidden" name="max" value="${maxSel}">
 
                     <select name="marca" class="selector-marcas" onchange="this.form.submit()">
                         <option value="">Todas las marcas</option>
