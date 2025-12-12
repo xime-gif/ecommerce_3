@@ -35,7 +35,6 @@
                             <span style="font-size: 0.9em; color: #555; margin-left: 10px;">
                                 (<%= cantidadItems%> productos)
                             </span>
-                            <span class="link-deseleccionar">Deseleccionar todo</span>
                         </div>
                     </div>
                     <hr class="separador">
@@ -56,15 +55,15 @@
                             <div class="flex-spacer"></div>
                             <div class="producto-acciones">
                                 <div class="cantidad-selector">
-                                    <button class="btn-qty" onclick="location.href = 'RestarItemServlet?id=<%= item.getVehiculo().getId()%>'">
+                                    <button class="btn-qty" onclick="location.href = 'restarItemCarrito?id=<%= item.getVehiculo().getId()%>'">
                                         <i class="fas fa-minus"></i>
                                     </button>
                                     <span class="cantidad-numero"><%= item.getCantidad()%></span>
-                                    <button class="btn-qty" onclick="location.href = 'agregarCarrito?id=<%= item.getVehiculo().getId()%>&cantidad=1'">
+                                    <button class="btn-qty" onclick="location.href = 'agregarItemCarrito?id=<%= item.getVehiculo().getId()%>&cantidad=1'">
                                         <i class="fas fa-plus"></i>
                                     </button>
                                 </div>
-                                <button class="btn-eliminar" onclick="location.href = 'EliminarItemServlet?id=<%= item.getVehiculo().getId()%>'" style="margin-left: 10px; border: none; background: none; cursor: pointer; color: red;">
+                                <button class="btn-eliminar" onclick="location.href = 'quitarItemCarrito?id=<%= item.getVehiculo().getId()%>'" style="margin-left: 10px; border: none; background: none; cursor: pointer; color: red;">
                                     <i class="fas fa-trash"></i>
                                 </button>
                                 <div class="producto-precio-individual">

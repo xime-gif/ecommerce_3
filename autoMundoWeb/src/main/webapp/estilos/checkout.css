@@ -5,7 +5,6 @@
     display: flex;
     gap: 40px;
     align-items: flex-start;
-    /* Let content determine height so flex children don't stretch vertically */
     min-height: auto;
 }
 
@@ -202,6 +201,13 @@
     background-color: var(--color-accent-muted-hover);
     transform: translateY(-3px);
     box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.form-checkout {
+    display: flex;
+    gap: 40px;
+    width: 100%;
+    align-items: flex-start;
 }
 
 @media (max-width: 1130px) {
