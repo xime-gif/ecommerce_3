@@ -41,11 +41,11 @@ public class Vehiculo implements Serializable {
     @Column(nullable = false)
     private Integer existencias;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "categoriaId", nullable = false)
     private Categoria categoria;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "modeloId", nullable = false)
     private Modelo modelo;
 

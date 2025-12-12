@@ -32,6 +32,19 @@ public class CarritoDeCompras implements Serializable {
         this.items.add(itemNuevo);
     }
 
+    public void restarCantidad(Long idVehiculo) {
+        for (ItemCarrito item : items) {
+            if (item.getVehiculo().getId().equals(idVehiculo)) {
+                if (item.getCantidad() > 1) {
+                    item.setCantidad(item.getCantidad() - 1);
+                } else {
+                    items.remove(item);
+                }
+                return;
+            }
+        }
+    }
+
     public void eliminarItem(Long idVehiculo) {
         this.items.removeIf(item -> item.getVehiculo().getId().equals(idVehiculo));
     }

@@ -35,6 +35,7 @@ public class CatalogoServlet extends HttpServlet {
             throws ServletException, IOException {
 
         // Obtener parámetros
+        String busqueda = request.getParameter("q");
         String marca = request.getParameter("marca");
         String categoria = request.getParameter("categoria");
         String precioMin = request.getParameter("min");

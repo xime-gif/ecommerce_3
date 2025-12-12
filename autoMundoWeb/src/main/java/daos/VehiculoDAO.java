@@ -22,7 +22,7 @@ public class VehiculoDAO extends BaseDAO<Vehiculo, Long> {
         EntityManager em = JPAUtil.getEntityManager();
         try {
             return em.createQuery(
-                    "SELECT v FROM Vehiculo v WHERE v.modelo.marca.nombre = :marca",
+                    "SELECT DISTINCT v FROM Vehiculo v LEFT JOIN FETCH v.imagenes WHERE v.modelo.marca.nombre = :marca",
                     Vehiculo.class
             )
                     .setParameter("marca", marca)
@@ -36,7 +36,7 @@ public class VehiculoDAO extends BaseDAO<Vehiculo, Long> {
         EntityManager em = JPAUtil.getEntityManager();
         try {
             return em.createQuery(
-                    "SELECT v FROM Vehiculo v WHERE v.categoria.id = :idCategoria",
+                    "SELECT DISTINCT v FROM Vehiculo v LEFT JOIN FETCH v.imagenes WHERE v.categoria.id = :idCategoria",
                     Vehiculo.class
             )
                     .setParameter("idCategoria", idCategoria)
@@ -50,7 +50,7 @@ public class VehiculoDAO extends BaseDAO<Vehiculo, Long> {
         EntityManager em = JPAUtil.getEntityManager();
         try {
             return em.createQuery(
-                    "SELECT v FROM Vehiculo v WHERE v.modelo.nombre = :modelo",
+                    "SELECT DISTINCT v FROM Vehiculo v LEFT JOIN FETCH v.imagenes WHERE v.modelo.nombre = :modelo",
                     Vehiculo.class
             )
                     .setParameter("modelo", modelo)
@@ -64,7 +64,7 @@ public class VehiculoDAO extends BaseDAO<Vehiculo, Long> {
         EntityManager em = JPAUtil.getEntityManager();
         try {
             return em.createQuery(
-                    "SELECT v FROM Vehiculo v WHERE v.precio BETWEEN :min AND :max",
+                    "SELECT DISTINCT v FROM Vehiculo v LEFT JOIN FETCH v.imagenes WHERE v.precio BETWEEN :min AND :max",
                     Vehiculo.class
             )
                     .setParameter("min", min)
@@ -143,19 +143,25 @@ public class VehiculoDAO extends BaseDAO<Vehiculo, Long> {
             em.close();
         }
     }
-    
+
     public List<Vehiculo> buscarTodosConImagenes() {
         EntityManager em = JPAUtil.getEntityManager();
         try {
-            return em.createQuery(
-                "SELECT DISTINCT v FROM Vehiculo v LEFT JOIN FETCH v.imagenes",
-                Vehiculo.class
+            List<Vehiculo> vehiculos = em.createQuery(
+                    "SELECT DISTINCT v FROM Vehiculo v LEFT JOIN FETCH v.imagenes",
+                    Vehiculo.class
             ).getResultList();
+
+            for (Vehiculo v : vehiculos) {
+                v.getCaracteristicas().size();
+            }
+
+            return vehiculos;
         } finally {
             em.close();
         }
     }
-    
+
     public Vehiculo actualizar(Vehiculo vehiculo) {
         EntityManager em = JPAUtil.getEntityManager();
         try {
@@ -167,6 +173,5 @@ public class VehiculoDAO extends BaseDAO<Vehiculo, Long> {
             em.close();
         }
     }
-    
-    
+
 }

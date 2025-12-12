@@ -29,7 +29,7 @@
 
     <ul>
         <li><a href="index.jsp" class="<%= request.getRequestURI().contains("index.jsp") || request.getRequestURI().endsWith("/") ? "active" : ""%>">Principal</a></li>
-        <li><a href="catalogo.jsp" class="<%= request.getRequestURI().contains("catalogo.jsp") ? "active" : ""%>">Catálogo</a></li>
+        <li><a href="catalogo" class="<%= request.getRequestURI().contains("catalogo.jsp") ? "active" : ""%>">Catálogo</a></li>
         <li><a href="carritoCompras.jsp" class="<%= request.getRequestURI().contains("carritoCompras.jsp") ? "active" : ""%>">Carrito</a></li>
         <li><a href="pedidos.jsp" class="<%= request.getRequestURI().contains("pedidos.jsp") ? "active" : ""%>">Pedidos</a></li>
         <li><a href="resenias.jsp" class="<%= request.getRequestURI().contains("resenias.jsp") ? "active" : ""%>">Reseñas</a></li>

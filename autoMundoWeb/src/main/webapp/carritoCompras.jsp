@@ -56,12 +56,17 @@
                             <div class="flex-spacer"></div>
                             <div class="producto-acciones">
                                 <div class="cantidad-selector">
-                                    <button class="btn-qty" onclick="location.href = 'EliminarItemServlet?id=<%= item.getVehiculo().getId()%>'"><i class="fas fa-trash"></i></button>
-
+                                    <button class="btn-qty" onclick="location.href = 'RestarItemServlet?id=<%= item.getVehiculo().getId()%>'">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
                                     <span class="cantidad-numero"><%= item.getCantidad()%></span>
-
-                                    <button class="btn-qty"><i class="fas fa-plus"></i></button>
+                                    <button class="btn-qty" onclick="location.href = 'agregarCarrito?id=<%= item.getVehiculo().getId()%>&cantidad=1'">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
                                 </div>
+                                <button class="btn-eliminar" onclick="location.href = 'EliminarItemServlet?id=<%= item.getVehiculo().getId()%>'" style="margin-left: 10px; border: none; background: none; cursor: pointer; color: red;">
+                                    <i class="fas fa-trash"></i>
+                                </button>
                                 <div class="producto-precio-individual">
                                     <%= formatoMoneda.format(item.getSubtotal())%>
                                 </div>
