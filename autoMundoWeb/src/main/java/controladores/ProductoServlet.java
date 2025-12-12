@@ -17,23 +17,24 @@ public class ProductoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String idStr = request.getParameter("id");
-        
+
         if (idStr != null && !idStr.isBlank()) {
             try {
                 Long id = Long.valueOf(idStr);
-                Vehiculo v = vehiculoDAO.buscarPorIdConImagenes(id);
-                
-                if (v != null) {
-                    request.setAttribute("vehiculo", v);
-                    request.getRequestDispatcher("productos.jsp").forward(request, response);
+
+                Vehiculo vehiculo = vehiculoDAO.buscarPorIdConImagenes(id);
+
+                if (vehiculo != null) {
+                    request.setAttribute("vehiculo", vehiculo);
+                    request.getRequestDispatcher("/productos.jsp").forward(request, response);
                     return;
                 }
             } catch (NumberFormatException e) {
-                System.out.println("ID inválido");
             }
         }
-        response.sendRedirect("catalogo.jsp");
+
+        response.sendRedirect("catalogo");
     }
 }

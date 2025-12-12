@@ -70,19 +70,15 @@
                     <c:forEach var="v" items="${vehiculos}">
 
                         <div class="car-card">
-                            <!-- Imagen principal del vehículo -->
-                            <c:if test="${not empty v.imagenes}">
-                                <img class="car-img" src="${v.imagenes[0].url}" alt="${v.nombre}">
-                            </c:if>
+                            <a href="producto?id=${v.id}" class="car-link">
+                                <c:if test="${not empty v.imagenes}">
+                                    <img class="car-img" src="${v.imagenes[0].url}" alt="${v.nombre}">
+                                </c:if>
+                            </a>
 
                             <div class="car-info">
-                                <h3>${v.modelo.nombre}</h3>
-
-                                <p class="car-price">$${v.precio}</p>
-
-                                <a class="car-link" href="detalleVehiculo?id=${v.id}">
-                                    Más información
-                                </a>
+                                <h3>${v.nombre}</h3>
+                                <a href="producto?id=${v.id}" class="btn-detalles">Ver Detalles</a>
                             </div>
                         </div>
 

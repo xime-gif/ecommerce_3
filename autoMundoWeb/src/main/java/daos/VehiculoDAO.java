@@ -82,9 +82,12 @@ public class VehiculoDAO extends BaseDAO<Vehiculo, Long> {
                     "SELECT v FROM Vehiculo v LEFT JOIN FETCH v.imagenes WHERE v.id = :id",
                     Vehiculo.class
             );
-
             query.setParameter("id", id);
-            return query.getSingleResult();
+            Vehiculo v = query.getSingleResult();
+
+            v.getCaracteristicas().size();
+
+            return v;
 
         } catch (NoResultException e) {
             return null;

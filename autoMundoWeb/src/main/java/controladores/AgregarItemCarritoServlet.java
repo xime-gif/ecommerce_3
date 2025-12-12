@@ -77,13 +77,6 @@ public class AgregarItemCarritoServlet extends HttpServlet {
         }
 
         // --- LÓGICA DE REDIRECCIÓN ---
-        String paginaAnterior = request.getHeader("Referer");
-
-        if (paginaAnterior != null && !paginaAnterior.isBlank()) {
-            response.sendRedirect(paginaAnterior);
-        } else {
-            response.sendRedirect("catalogo");
-        }
+        response.sendRedirect("carritoCompras.jsp");
     }
-
 }
