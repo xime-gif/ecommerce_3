@@ -19,7 +19,7 @@
     <ul>
         <li><a href="adminUsuarios.jsp" class="active">Usuarios</a></li>
         <li><a href="admin?accion=altaForm" class="active">Altas</a></li>
-        <li><a href="adminBajas.jsp">Bajas</a></li>
+        <li><a href="${pageContext.request.contextPath}/AdminBajas">Bajas</a></li>
         <li><a href="logout">Cerrar Sesión</a></li>
     </ul>
 </nav>

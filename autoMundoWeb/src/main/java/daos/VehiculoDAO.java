@@ -143,4 +143,30 @@ public class VehiculoDAO extends BaseDAO<Vehiculo, Long> {
             em.close();
         }
     }
+    
+    public List<Vehiculo> buscarTodosConImagenes() {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            return em.createQuery(
+                "SELECT DISTINCT v FROM Vehiculo v LEFT JOIN FETCH v.imagenes",
+                Vehiculo.class
+            ).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    
+    public Vehiculo actualizar(Vehiculo vehiculo) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            Vehiculo actualizado = em.merge(vehiculo);
+            em.getTransaction().commit();
+            return actualizado;
+        } finally {
+            em.close();
+        }
+    }
+    
+    
 }

@@ -55,13 +55,27 @@ public class AltasBajasBo {
     }
 
     public List<Vehiculo> obtenerAutos() {
-        return vehiculoDAO.buscarTodos();
+        return vehiculoDAO.buscarTodosConImagenes();
     }
 
-    public void bajaVehiculo(Long id) {
-        Vehiculo v = vehiculoDAO.buscarPorId(id);
-        if (v != null) {
-            vehiculoDAO.eliminar(v);
+    public boolean bajaVehiculo(Long id) {
+        try {
+            Vehiculo vehiculo = vehiculoDAO.buscarPorId(id);
+            if (vehiculo == null) return false;
+
+            if (vehiculo.getExistencias() > 1) {
+                vehiculo.setExistencias(vehiculo.getExistencias() - 1);
+                vehiculoDAO.actualizar(vehiculo);
+            } else {
+                vehiculoDAO.eliminar(id);
+            }
+
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
+    
+    
+    
 }

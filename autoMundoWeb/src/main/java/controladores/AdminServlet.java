@@ -86,10 +86,10 @@ public class AdminServlet extends HttpServlet {
                 request.getRequestDispatcher("adminAltas.jsp").forward(request, response);
                 break;
             case "lista":
-            default:
-                List<Vehiculo> autos = altasBajasBo.obtenerAutos();
-                request.setAttribute("vehiculos", autos);
-                request.getRequestDispatcher("adminBajas.jsp").forward(request, response);
+            List<Vehiculo> autos = altasBajasBo.obtenerAutos();
+            request.setAttribute("vehiculos", autos);
+            request.getRequestDispatcher("admin.jsp").forward(request, response);
+            break;
         }
     }
 
@@ -134,4 +134,5 @@ public class AdminServlet extends HttpServlet {
         altasBajasBo.altaVehiculo(v, urlImagen);
         response.sendRedirect("admin?accion=altaForm&msg=ok");
     }
+
 }

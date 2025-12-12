@@ -16,7 +16,7 @@ import java.util.Objects;
  * @author Ximena
  */
 @Entity
-@Table(name = "imagenesVehiculo")
+@Table(name = "imagenesvehiculo")
 public class ImagenVehiculo implements Serializable {
 
     private static final long serialVersionUID = 1L;
